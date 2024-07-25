@@ -17,12 +17,12 @@ const SignInForm = () => {
   // Function to handle Google sign-in
   const handleGoogleSignIn = () => {
     // Implement the logic for Google Sign-In here
-    window.open("http://localhost:3000/auth/google", "_self");
+    window.open("https://tastetrove.onrender.com/auth/google", "_self");
     console.log("Google Sign-In clicked");
   };
   const handleAdminGoogleSignIn = () => {
     // Implement the logic for Google Sign-In here
-    window.open("http://localhost:3000/admin/auth/google", "_self");
+    window.open("https://tastetrove.onrender.com/admin/auth/google", "_self");
     console.log("Google Admin Sign-In clicked");
   };
   // useEffect(() => {
@@ -61,7 +61,7 @@ const SignInForm = () => {
       {credentials.selectValue == "Customer" ? (
         <>
           <form
-            action="http://localhost:3000/register"
+            action="https://tastetrove.onrender.com/register"
             method="post"
             className="form"
           >
@@ -147,7 +147,7 @@ const SignInForm = () => {
       ) : credentials.selectValue == "MessOwner" ? (
         <>
           <form
-            action="http://localhost:3000/admin/register"
+            action="https://tastetrove.onrender.com/admin/register"
             method="post"
             className="form"
           >
