@@ -32,7 +32,7 @@ const MessItemOwner = (listing) => {
 
 
     const deleteListing = async (id) => {
-        axios.delete(`http://localhost:3000/listings/${id}`);
+        axios.delete(`https://tastetrove.onrender.com/listings/${id}`);
         // getData()
     };
 
