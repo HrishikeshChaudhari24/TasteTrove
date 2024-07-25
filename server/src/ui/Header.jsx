@@ -26,7 +26,7 @@ function Header() {
   };
 
   function logout() {
-    window.open("http://localhost:3000/auth/logout", "_self");
+    window.open("https://tastetrove.onrender.com/auth/logout", "_self");
     // userData=""
     removeUserData(userData);
     setUserData("");
@@ -34,7 +34,7 @@ function Header() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users", { withCredentials: true })
+      .get("https://tastetrove.onrender.com/users", { withCredentials: true })
       .then((response) => {
         setUserData(response.data);
         // console.log(response.data)
