@@ -17,7 +17,7 @@ const SignInForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/forgotpassword", credentials).then((response) => {
+    axios.post("https://tastetrove.onrender.com/forgotpassword", credentials).then((response) => {
       console.log(response);
       setFlag(true);
       window.open("http://localhost:5173/login","_self")
