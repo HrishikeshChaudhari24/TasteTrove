@@ -58,7 +58,7 @@ function AdminHub() {
 
   const getUserData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/User/${id}`, {
+      const response = await axios.get(`https://tastetrove.onrender.com/User/${id}`, {
         withCredentials: true,
       });
       // const response = useSelector((state)=>state.userdata);
@@ -76,7 +76,7 @@ function AdminHub() {
 
   const getOrders = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/order/${id}`, {
+      const response = await axios.get(`https://tastetrove.onrender.com/order/${id}`, {
         withCredentials: true,
       });
       console.log("hi")
@@ -106,7 +106,7 @@ function AdminHub() {
   const deleteOrder = async (data) => {
     try {
         const response = await axios.delete(
-            `http://localhost:3000/order/${profile._id}/${data}`,
+            `https://tastetrove.onrender.com/order/${profile._id}/${data}`,
             { withCredentials: true }
         );
         if (response.status === 200) {
@@ -188,7 +188,7 @@ const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:3000/User/listings/${id}`,
+        `https://tastetrove.onrender.com/User/listings/${id}`,
         profile
       );
       console.log(response.data);
@@ -245,7 +245,7 @@ const handleFormSubmit = async (e) => {
             <Link
               href="#"
               className="logout"
-              to={"http://localhost:3000/auth/logout"}
+              to={"https://tastetrove.onrender.com/auth/logout"}
             >
               <i className="bx bxs-log-out-circle"></i>
               LogOut &nbsp;
