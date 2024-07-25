@@ -36,7 +36,7 @@ const Edit = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/listings/${bid}`)
+      .get(`https://tastetrove.onrender.com/listings/${bid}`)
       .then((response) => {
         setListing({
           ...Listing,
@@ -72,7 +72,7 @@ const Edit = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        ` http://localhost:3000/listings/${bid}`,
+        ` https://tastetrove.onrender.com/listings/${bid}`,
         Listing
       );
       console.log(response.data);
