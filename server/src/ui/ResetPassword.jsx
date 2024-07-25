@@ -22,7 +22,7 @@ const Resetpassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(token)
-    axios.patch(`http://localhost:3000/resetpassword/${token}`, credentials,{withCredentials:true}).then((res) => {
+    axios.patch(`https://tastetrove.onrender.com/resetpassword/${token}`, credentials,{withCredentials:true}).then((res) => {
       if(res.status==200){
         alert("Your Password is Successfully Updated")
       }
@@ -30,7 +30,7 @@ const Resetpassword = () => {
     }).catch((error)=>{
       console.log(error)
     })
-    // axios.post("http://localhost:3000/forgotpassword", credentials).then((response) => {
+    // axios.post("https://tastetrove.onrender.com/forgotpassword", credentials).then((response) => {
     //   console.log(response);
     //   setFlag(true);
     //   window.open("http://localhost:5173/login","_self")
