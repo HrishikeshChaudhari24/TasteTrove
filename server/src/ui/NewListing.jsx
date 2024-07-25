@@ -99,7 +99,7 @@ const NewListing = () => {
 
       formData.append("image", listing.image); // Append image file to FormData
       const response = await axios.post(
-        "http://localhost:3000/listings",
+        "https://tastetrove.onrender.com/listings",
         formData, { withCredentials: true }
       );
       console.log(response.data);
