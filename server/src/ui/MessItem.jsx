@@ -41,7 +41,7 @@ const MessItem = (listing) => {
   const navigate = useNavigate();
 
   const deleteListing = async (id) => {
-    axios.delete(`http://localhost:3000/listings/${id}`);
+    axios.delete(`https://tastetrove.onrender.com/listings/${id}`);
     // getData()
   };
   const dispatch = useDispatch();
