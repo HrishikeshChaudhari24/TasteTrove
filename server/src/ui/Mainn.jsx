@@ -51,7 +51,7 @@ const Mainn = () => {
       console.log(info.dishname);
       console.log(info);
       const response = await axios.post(
-        `http://localhost:3000/listings/${bid}/weeklymenu`,
+        `https://tastetrove.onrender.com/listings/${bid}/weeklymenu`,
         info, { withCredentials: true }
       );
       setInfo({
@@ -76,12 +76,12 @@ const Mainn = () => {
   };
 
   const deleteListing = async (id) => {
-    axios.delete(`http://localhost:3000/listings/${id}`, { withCredentials: true });
+    axios.delete(`https://tastetrove.onrender.com/listings/${id}`, { withCredentials: true });
   };
 
   const deleteReview = async (id) => {
-    // axios.delete(`http://localhost:3000/listings/${bid}/${id}/reviews`,{withCredentials: true});
-    axios.delete(`http://localhost:3000/listing/${bid}/reviews/${id}`, {
+    // axios.delete(`https://tastetrove.onrender.com/listings/${bid}/${id}/reviews`,{withCredentials: true});
+    axios.delete(`https://tastetrove.onrender.com/listing/${bid}/reviews/${id}`, {
       withCredentials: true,
     })
   };
@@ -93,7 +93,7 @@ const Mainn = () => {
 
   const getData = async () => {
     axios
-      .get(`http://localhost:3000/listings/${bid}`, { withCredentials: true })
+      .get(`https://tastetrove.onrender.com/listings/${bid}`, { withCredentials: true })
       .then((response) => {
         setListing(response.data);
       })
@@ -104,7 +104,7 @@ const Mainn = () => {
 
   const getDataR = async () => {
     axios
-      .get(`http://localhost:3000/listing/${bid}/reviews`, { withCredentials: true })
+      .get(`https://tastetrove.onrender.com/listing/${bid}/reviews`, { withCredentials: true })
       .then((response) => {
         setReviews(response.data);
       })
@@ -117,7 +117,7 @@ const Mainn = () => {
     e.preventDefault();
     console.log(Review);
     const response = await axios.post(
-      `http://localhost:3000/listing/${bid}/reviews`,
+      `https://tastetrove.onrender.com/listing/${bid}/reviews`,
       Review , { withCredentials: true }
     );
     console.log("hello");
@@ -161,7 +161,7 @@ const Mainn = () => {
   const deletemenu = async (day, type, name) => {
     console.log("hello");
     axios.delete(
-      `http://localhost:3000/listings/${bid}/dish/${day}/${type}/${name}`
+      `https://tastetrove.onrender.com/listings/${bid}/dish/${day}/${type}/${name}`
       , { withCredentials: true });
     window.location.reload(); // Refresh the page
   };
