@@ -45,7 +45,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://tastetrove-1.onrender.com",
     methods: "GET,PUT,POST,DELETE,PATCH",
     credentials: true,
   })
