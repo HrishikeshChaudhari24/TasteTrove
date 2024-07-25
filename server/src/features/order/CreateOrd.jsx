@@ -132,7 +132,7 @@ export async function createOrderAction (params,phoneNumber,totalAmount) {
   
       // Make a POST request to create a new order
       console.log("1");
-            axios.post(`http://localhost:3000/order/${userid}`, {
+            axios.post(`https://tastetrove.onrender.com/${userid}`, {
         phone: phoneNumber,
         totalAmount: totalAmount,
         }, { withCredentials: true })
