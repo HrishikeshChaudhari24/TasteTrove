@@ -57,7 +57,7 @@ function DashboardAdmin() {
 
   //   const getUserData = async () => {
   //     try {
-  //       const response = await axios.get(`http://localhost:3000/User/${id}`, {
+  //       const response = await axios.get(`https://tastetrove.onrender.com/User/${id}`, {
   //         withCredentials: true,
   //       });
   //       // const response = useSelector((state)=>state.userdata);
@@ -75,7 +75,7 @@ function DashboardAdmin() {
 
   //   const getOrders = async () => {
   //     try {
-  //       const response = await axios.get(`http://localhost:3000/order/${id}`, {
+  //       const response = await axios.get(`https://tastetrove.onrender.com/order/${id}`, {
   //         withCredentials: true,
   //       });
   //       console.log(response.data);
@@ -165,7 +165,7 @@ function DashboardAdmin() {
   //     e.preventDefault();
   //     try {
   //       const response = await axios.put(
-  //         `http://localhost:3000/User/listings/${id}`,
+  //         `https://tastetrove.onrender.com/User/listings/${id}`,
   //         profile
   //       );
   //       console.log(response.data);
