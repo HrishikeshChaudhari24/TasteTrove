@@ -25,7 +25,7 @@ const Index = () => {
 
   const getData = async () => {
     axios
-      .get("http://localhost:3000/listings")
+      .get("https://tastetrove.onrender.com/listings")
       .then((response) => {
         setlistings(response.data); // Access response.data to get the actual data
         setparentlistings(response.data)
