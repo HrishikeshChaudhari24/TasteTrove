@@ -196,7 +196,7 @@ function DashboardAdmin() {
 
   const getUserData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/Owner/${id}`);
+      const response = await axios.get(`https://tastetrove.onrender.com/Owner/${id}`);
       const userData = response.data;
       setProfile(userData);
     } catch (error) {
@@ -206,7 +206,7 @@ function DashboardAdmin() {
   const getOrders = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/order/admin/${id}`,
+        `https://tastetrove.onrender.com/order/admin/${id}`,
         { withCredentials: true }
       );
       console.log(response.data);
@@ -251,7 +251,7 @@ function DashboardAdmin() {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:3000/Owner/listings/${id}`,
+        `https://tastetrove.onrender.com/Owner/listings/${id}`,
         profile
       );
       console.log(`/profile/${id}`);
@@ -264,7 +264,7 @@ function DashboardAdmin() {
   const getData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/Owner/listings/${id}`,
+        `https://tastetrove.onrender.com/Owner/listings/${id}`,
         { withCredentials: true }
       );
       setListings(response.data);
@@ -343,7 +343,7 @@ function DashboardAdmin() {
             <Link
               href="#"
               className="logout"
-              to={"http://localhost:3000/auth/logout"}
+              to={"https://tastetrove.onrender.com/auth/logout"}
             >
               <i className="bx bxs-log-out-circle"></i>
               Logout &nbsp;
