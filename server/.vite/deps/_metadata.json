@@ -1,0 +1,110 @@
+{
+  "hash": "9cc099e8",
+  "browserHash": "1f152eb9",
+  "optimized": {
+    "@fortawesome/react-fontawesome": {
+      "src": "../../node_modules/@fortawesome/react-fontawesome/index.es.js",
+      "file": "@fortawesome_react-fontawesome.js",
+      "fileHash": "867e084a",
+      "needsInterop": false
+    },
+    "@iconscout/react-unicons": {
+      "src": "../../node_modules/@iconscout/react-unicons/index.js",
+      "file": "@iconscout_react-unicons.js",
+      "fileHash": "f14f8a72",
+      "needsInterop": false
+    },
+    "@mui/material": {
+      "src": "../../node_modules/@mui/material/index.js",
+      "file": "@mui_material.js",
+      "fileHash": "d747f091",
+      "needsInterop": false
+    },
+    "@reduxjs/toolkit": {
+      "src": "../../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs",
+      "file": "@reduxjs_toolkit.js",
+      "fileHash": "eb3bbc34",
+      "needsInterop": false
+    },
+    "autoprefixer": {
+      "src": "../../node_modules/autoprefixer/lib/autoprefixer.js",
+      "file": "autoprefixer.js",
+      "fileHash": "bb0dc7b4",
+      "needsInterop": true
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "108c8f64",
+      "needsInterop": false
+    },
+    "prop-types": {
+      "src": "../../node_modules/prop-types/index.js",
+      "file": "prop-types.js",
+      "fileHash": "ee8dd001",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "9ece83d7",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "f22eaa2a",
+      "needsInterop": true
+    },
+    "react-icons/bs": {
+      "src": "../../node_modules/react-icons/bs/index.esm.js",
+      "file": "react-icons_bs.js",
+      "fileHash": "68f51838",
+      "needsInterop": false
+    },
+    "react-icons/fa": {
+      "src": "../../node_modules/react-icons/fa/index.esm.js",
+      "file": "react-icons_fa.js",
+      "fileHash": "458afdf5",
+      "needsInterop": false
+    },
+    "react-map-gl": {
+      "src": "../../node_modules/react-map-gl/dist/esm/index.js",
+      "file": "react-map-gl.js",
+      "fileHash": "256f33ad",
+      "needsInterop": false
+    },
+    "react-redux": {
+      "src": "../../node_modules/react-redux/dist/react-redux.mjs",
+      "file": "react-redux.js",
+      "fileHash": "9caf0dbd",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "f42204f5",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-ZWQ47MMX": {
+      "file": "chunk-ZWQ47MMX.js"
+    },
+    "mapbox-gl-2GPM5PO2": {
+      "file": "mapbox-gl-2GPM5PO2.js"
+    },
+    "chunk-SJEVT7A5": {
+      "file": "chunk-SJEVT7A5.js"
+    },
+    "chunk-3XTRAATE": {
+      "file": "chunk-3XTRAATE.js"
+    },
+    "chunk-ZSN3XFJS": {
+      "file": "chunk-ZSN3XFJS.js"
+    },
+    "chunk-2GTGKKMZ": {
+      "file": "chunk-2GTGKKMZ.js"
+    }
+  }
+}
