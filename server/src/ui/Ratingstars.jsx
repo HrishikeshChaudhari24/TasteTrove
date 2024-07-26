@@ -1,4 +1,4 @@
-import './RatingStars.css'; // Import a CSS file for styling (create if not exists)
+import './Ratingstars.css'; // Import a CSS file for styling (create if not exists)
 import  { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
