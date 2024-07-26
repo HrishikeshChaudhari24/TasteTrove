@@ -15,7 +15,7 @@ import SignUpForm from "./features/user/SignInForm/SignUpForm";
 import { useEffect, useState } from "react";
 // import { logout } from "../backend/controllers/goo_auth_controllers";
 // import { logout } from "./ui/Header";
-import Timepass from "./ui/timepass";
+import Timepass from "./ui/Timepass";
 import Index from "./ui/Index";
 import NewListing from "./ui/NewListing";
 import Edit from "./ui/Edit";
