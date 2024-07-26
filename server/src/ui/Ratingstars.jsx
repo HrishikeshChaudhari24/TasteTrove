@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 
 import PropTypes from 'prop-types';
-import './RatingStars.css'; // Import a CSS file for styling (create if not exists)
+import './Ratingstars.css'; // Import a CSS file for styling (create if not exists)
 import React from "react";
 
 const RatingStars = ({ rating }) => {
