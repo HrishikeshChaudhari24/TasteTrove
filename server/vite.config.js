@@ -1,30 +1,23 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { createHtmlPlugin } from 'vite-plugin-html';
 import { visualizer } from 'rollup-plugin-visualizer';
-import ImageminPlugin from 'vite-plugin-imagemin';
+import viteCompression from 'vite-plugin-compression';
 
 export default defineConfig({
   plugins: [
     react(),
-    createHtmlPlugin(),
-    visualizer({ open: true }),
-    ImageminPlugin({
-      // configure options here, e.g., for PNG optimization
-      pngquant: {
-        quality: [0.65, 0.9],
-      },
-    }),
-    CompressionPlugin({
-      verbose: true,
-      threshold: 10240,
-      algorithm: 'gzip',
-      minRatio: 0.8,
-    }),
+    visualizer({ open: true }), // Generates a bundle visualization
+    viteCompression() // Compresses output files
   ],
   build: {
     rollupOptions: {
-      // Customize Rollup options here if needed
-    },
-  },
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+          }
+        }
+      }
+    }
+  }
 });
