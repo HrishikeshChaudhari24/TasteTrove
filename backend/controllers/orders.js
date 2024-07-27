@@ -148,7 +148,7 @@ const getOrder = async (req, res) => {
             res.json(orderList);
         }
         else{
-            res.redirect('http://localhost:5173/login');
+            res.redirect('https://taste-trove-three.vercel.app/login');
         }
     } catch (error) {
         console.error("Error fetching orders:", error);
