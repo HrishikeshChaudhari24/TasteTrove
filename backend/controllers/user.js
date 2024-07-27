@@ -25,10 +25,10 @@ const login=async (req, res) => {
     if(req.isAuthenticated()){
         const result=sendMail(req.user.email)
             console.log("email sent successfully "+result)
-        res.redirect("http://localhost:5173")
+        res.redirect("https://taste-trove-three.vercel.app/")
     }
     else{
-        res.redirect("http://localhost:5173/login")
+        res.redirect("https://taste-trove-three.vercel.app/login")
     }
 };
 const signUpform=(req, res) => {
@@ -66,7 +66,7 @@ const signUp=asyncWrapper( async (req, res) => {
             text:`Welcome to Taste Trove! 🎉 Thank you for joining our vibrant community of food enthusiasts. Get ready to discover exciting flavors, connect with fellow foodies, and embark on delicious culinary adventures. Happy exploring!`
         })
         console.log("successfully created");
-        res.redirect("http://localhost:5173/login")
+        res.redirect("https://taste-trove-three.vercel.app/login")
     }
     // let result = await newUser.save();
 
@@ -75,7 +75,7 @@ const signUp=asyncWrapper( async (req, res) => {
 const logout=asyncWrapper(async(req,res)=>{
     console.log("logging out")
     req.logout()
-    res.redirect("http://localhost:5173/login")
+    res.redirect("https://taste-trove-three.vercel.app/login")
 })
 const forgotPassword=asyncWrapper(async(req,res)=>{
     const forgottedUser=await User.findOne({email:req.body.email})
@@ -154,7 +154,7 @@ const passwordResetRedirect=async(req,res)=>{
         userR.passwordResetTokenExpires=undefined
         userR.passwordChangedAt=undefined
 
-        return res.status(400).redirect('http://localhost:5173/login');
+        return res.status(400).redirect('https://taste-trove-three.vercel.app/login');
     }
     
    
