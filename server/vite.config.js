@@ -10,9 +10,7 @@ export default defineConfig({
     viteCompression() // Compresses output files
   ],
   server: {
-    host: true,
-    strictPort: true,
-    port: 5173,
+    host: true
 },
   build: {
     rollupOptions: {
