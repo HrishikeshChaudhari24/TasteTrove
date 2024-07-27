@@ -9,9 +9,11 @@ export default defineConfig({
     visualizer({ open: true }), // Generates a bundle visualization
     viteCompression() // Compresses output files
   ],
-  server: {
-    host: true
-},
+   server: {
+    host: '0.0.0.0', // Allows access from network devices
+    strictPort: true,
+    port: 5173,
+  },
   build: {
     rollupOptions: {
       output: {
