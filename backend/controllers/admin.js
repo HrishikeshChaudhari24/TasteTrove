@@ -24,10 +24,10 @@ const login=async (req, res) => {
     if(req.isAuthenticated()){
         const result=sendMail(req.user.email)
         console.log("email sent successfully "+result)
-        res.redirect("http://localhost:5173")
+        res.redirect("https://taste-trove-three.vercel.app/")
     }
     else{
-        res.redirect("http://localhost:5173/login")
+        res.redirect("https://taste-trove-three.vercel.app/login")
     }
 };
 
@@ -54,7 +54,7 @@ const signUp=asyncWrapper( async (req, res) => {
             subject:'Success',
             text:`Welcome to Taste Trove! 🎉 Thank you for joining our vibrant community of food enthusiasts. Get ready to discover exciting flavors, connect with fellow foodies, and embark on delicious culinary adventures. Happy exploring!`
         })
-        res.redirect("http://localhost:5173/login")
+        res.redirect("https://taste-trove-three.vercel.app/login")
     }
     // let result = await newUser.save();
 
