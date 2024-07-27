@@ -13,6 +13,7 @@ const expressSession = require("express-session");
 const Listing = require("./models/listing"); //require model listing
 const Admin = require("./models/admin"); //require model Admin
 const User = require("./models/user"); //require model User
+const allowedOrigins = ['https://taste-trove-three.vercel.app'];
 
 
 
@@ -43,13 +44,18 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 // app.use(cors({ origin: 'http://localhost:3000' }));
 
-app.use(
-  cors({
-    origin: "https://taste-trove-three.vercel.app/",
-    methods: "GET,PUT,POST,DELETE,PATCH",
-    credentials: true,
-  })
-);
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 // for parsing data using res and request
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
