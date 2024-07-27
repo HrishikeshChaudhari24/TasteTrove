@@ -5,7 +5,7 @@ const logout=asyncWrapper(async(req,res)=>{
     req.logout(function(err) {
         if (err) { return next(err); }
         console.log("Successfully logged out")
-        res.redirect('http://localhost:5173/login');
+        res.redirect('https://taste-trove-three.vercel.app/login');
       });
 })
 
@@ -20,7 +20,7 @@ const redirect=asyncWrapper(async(req,res)=>{
                 text:`Welcome to Taste Trove! 🎉 Thank you for joining our vibrant community of food enthusiasts. Get ready to discover exciting flavors, connect with fellow foodies, and embark on delicious culinary adventures. Happy exploring!`
             })
             console.log("email sent successfully ")
-            res.redirect('http://localhost:5173')
+            res.redirect('https://taste-trove-three.vercel.app/')
         }
     // res.send("heelo redirect")
 })
