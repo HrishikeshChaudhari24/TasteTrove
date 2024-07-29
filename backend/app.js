@@ -45,17 +45,13 @@ app.set("views", path.join(__dirname, "views"));
 // app.use(cors({ origin: 'http://localhost:3000' }));
 
 
-app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: "https://taste-trove-three.vercel.app",
+    methods: "GET,PUT,POST,DELETE,PATCH",
+    credentials: true,
+  })
+);
 // for parsing data using res and request
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
