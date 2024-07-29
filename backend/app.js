@@ -13,7 +13,7 @@ const expressSession = require("express-session");
 const Listing = require("./models/listing"); //require model listing
 const Admin = require("./models/admin"); //require model Admin
 const User = require("./models/user"); //require model User
-const allowedOrigins = ['https://taste-trove-three.vercel.app/'];
+const allowedOrigins = ['https://taste-trove-three.vercel.app'];
 
 
 
