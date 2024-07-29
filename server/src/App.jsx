@@ -103,7 +103,7 @@ const router = createBrowserRouter([
       //   // action: updateOrderAction,
       // },
       {
-        path: "/login",
+        path: "https://taste-trove-three.vercel.app/login",
         element: <SignInForm />,
       },
       {
