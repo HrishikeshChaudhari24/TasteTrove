@@ -34,7 +34,7 @@ function Header() {
 
   useEffect(() => {
     axios
-      .get("https://tastetrove.onrender.com/users")
+      .get("https://tastetrove.onrender.com/users", { withCredentials: true })
       .then((response) => {
          console.log(response.data)
         setUserData(response.data);
