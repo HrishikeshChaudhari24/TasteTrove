@@ -37,7 +37,7 @@ function Header() {
       .get("https://tastetrove.onrender.com/users", { withCredentials: true })
       .then((response) => {
         setUserData(response.data);
-        // console.log(response.data)
+         console.log(response.data)
 
         addUserData(response.data);
       })
