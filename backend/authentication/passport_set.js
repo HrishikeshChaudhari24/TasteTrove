@@ -38,7 +38,7 @@ passport.use('local-admin', new LocalStrategy({
 }));
 
 passport.use('google-admin', new GoogleStrategy({
-    callbackURL: '/admin/auth/google/redirect',
+    callbackURL: 'https://tastetrove.onrender.com/admin/auth/google/redirect',
     clientID: process.env.clientID,
     clientSecret: process.env.clientSecret
 }, async (accessToken, refreshToken, profile, done) => {
@@ -84,7 +84,7 @@ passport.use('local-user', new LocalStrategy({
 }));
 
 passport.use('google-user', new GoogleStrategy({
-    callbackURL: '/auth/google/redirect',
+    callbackURL: 'https://tastetrove.onrender.com/auth/google/redirect',
     clientID: process.env.clientID,
     clientSecret: process.env.clientSecret
 }, async (req,accessToken, refreshToken, profile, done) => {
