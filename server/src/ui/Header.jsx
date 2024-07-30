@@ -36,12 +36,13 @@ function Header() {
     axios
       .get("https://tastetrove.onrender.com/users", { withCredentials: true })
       .then((response) => {
-        setUserData(response.data);
          console.log(response.data)
+        setUserData(response.data);
 
         addUserData(response.data);
       })
       .catch((error) => {
+        console.log("hello")
         console.log(error);
       });
   }, []);
