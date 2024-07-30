@@ -38,18 +38,18 @@ function Header() {
       .then((response) => {
          console.log(response.data)
         setUserData(response.data);
-         dispatch(addUser(response.data));
-        // addUserData(response.data);
+         // dispatch(addUser(response.data));
+        addUserData(response.data);
       })
       .catch((error) => {
         console.log("hello")
         console.log(error);
       });
   }, [dispatch]);
-  // const addUserData = (payload) => {
-  //   // console.log(payload)
-  //   dispatch(addUser(payload));
-  // };
+  const addUserData = (payload) => {
+    // console.log(payload)
+    dispatch(addUser(payload));
+  };
   const removeUserData = (payload) => {
     dispatch(removeUser(payload));
   };
