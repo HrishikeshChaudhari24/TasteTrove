@@ -47,7 +47,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(
   cors({
-    origin: "https://taste-trove-three.vercel.app",
+    origin: allowedOrigins,
     methods: "GET,PUT,POST,DELETE,PATCH",
     credentials: true,
   })
