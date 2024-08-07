@@ -45,7 +45,7 @@ function Header() {
         console.log("hello")
         console.log(error);
       });
-  }, [dispatch]);
+  }, []);
   const addUserData = (payload) => {
     // console.log(payload)
     dispatch(addUser(payload));
