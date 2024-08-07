@@ -137,16 +137,6 @@ app.get("/User/:id", async (req, res) => {
 // app.use('/listing',route1)
 // app.use('/dish',dish_route)
 // app.use('/listing/:id', reviewRoute)//for reviews route
-app.use("/auth", goo_auth_route);
-app.use("/", loc_auth_route);
-app.use("/admin", ad_loc_auth_route);
-app.use("/admin/auth", ad_goo_auth_route);
-app.use("/profile", profileroute);
-app.use("/order",order_route)
-
-app.use("/listings", listing_route); // listings router required
-app.use("/listing/:id/reviews", reviewRoute); //for reviews route
-
 app.get(
   "/users",
   asyncWrapper(async (req, res) => {
@@ -159,6 +149,16 @@ app.get(
     }
   })
 );
+app.use("/auth", goo_auth_route);
+app.use("/", loc_auth_route);
+app.use("/admin", ad_loc_auth_route);
+app.use("/admin/auth", ad_goo_auth_route);
+app.use("/profile", profileroute);
+app.use("/order",order_route)
+
+app.use("/listings", listing_route); // listings router required
+app.use("/listing/:id/reviews", reviewRoute); //for reviews route
+
 
 
 app.get("/getreq", async (req, res) => {
