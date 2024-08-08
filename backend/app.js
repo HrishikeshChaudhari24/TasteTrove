@@ -62,21 +62,21 @@ app.use(methodOverride("_method"));
 // initializingPassport(passport);
 app.use(
   expressSession({
-    secret: process.env.SECRET,
-    saveUninitialized: false,
-    resave: false,
+    secret: process.env.secret,
+    saveUninitialized: true,
+    resave: true,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
-      collectionName: 'sessions',
+      collectionName: "sessions",
     }),
     cookie: {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 24 * 60 * 60 * 1000, // 7 days
       httpOnly: true,
       secure: true, // Set to true since we are using HTTPS
+      // httpOnly: false,
     },
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 //http://localhost:3000/Owner/listings/:id
