@@ -61,20 +61,22 @@ const asyncWrapper = require("./middlewares/async.js");
 app.use(methodOverride("_method"));
 // initializingPassport(passport);
 app.use(
-  expressSession({
-    secret: process.env.secret,
-    saveUninitialized: true,
-    resave: true,
+  session({
+    secret: process.env.SECRET,
+    saveUninitialized: false,
+    resave: false,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
-      collectionName: "sessions",
+      collectionName: 'sessions',
     }),
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // 7 days
-      // httpOnly: false,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      httpOnly: true,
+      secure: true, // Set to true since we are using HTTPS
     },
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 //http://localhost:3000/Owner/listings/:id
