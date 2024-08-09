@@ -63,8 +63,8 @@ app.use(methodOverride("_method"));
 app.use(
   expressSession({
     secret: process.env.secret,
-    saveUninitialized: true,
-    resave: true,
+    saveUninitialized: false,
+    resave: false,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: "sessions",
