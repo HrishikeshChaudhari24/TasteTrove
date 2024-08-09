@@ -47,17 +47,9 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (like mobile apps, curl, etc.)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
+    origin: 'https://taste-trove-three.vercel.app', // Vercel frontend domain
     methods: "GET,PUT,POST,DELETE,PATCH",
-    credentials: true, // allows the backend to accept cookies from the frontend
+    credentials: true, // Allow cookies and sessions to be sent
   })
 );
 // for parsing data using res and request
@@ -79,6 +71,9 @@ app.use(
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 7 days
+       secure: true, // Ensure this is set to true since you are likely using HTTPS
+      httpOnly: true, // Prevent client-side JS from accessing the cookie
+      sameSite: 'none', // Allow cross-site cookies
       // secure: true, // Set to true since we are using HTTPS
       // httpOnly: false,
     },
