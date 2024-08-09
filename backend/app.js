@@ -47,9 +47,17 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     methods: "GET,PUT,POST,DELETE,PATCH",
-    credentials: true,
+    credentials: true, // allows the backend to accept cookies from the frontend
   })
 );
 // for parsing data using res and request
