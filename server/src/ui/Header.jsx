@@ -27,33 +27,53 @@ function Header() {
     removeUserData(userData);
     setUserData("");
   }
-  
-  useEffect(async() => {
-    // axios
-    //   .get("https://tastetrove.onrender.com/getreq", { withCredentials: true })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     setUserData(response.data);
-    //     addUserData(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching user data", error);
-    //   });
+
+  useEffect(() => {
+  const fetchData = async () => {
     try {
-  const response = await axios({
-    method: "get",
-    baseURL: "https://tastetrove.onrender.com",
-    url: "/getreq",
-    withCredentials: true
-  });
+      const response = await axios({
+        method: "get",
+        baseURL: "https://tastetrove.onrender.com",
+        url: "/getreq",
+        withCredentials: true
+      });
+      
+      console.log(response.data);
+      setUserData(response.data);
+      addUserData(response.data);
+    } catch (error) {
+      console.error("Error fetching user data", error);
+    }
+  };
+
+  fetchData();
+}, []);
+//   useEffect(async() => {
+//     // axios
+//     //   .get("https://tastetrove.onrender.com/getreq", { withCredentials: true })
+//     //   .then((response) => {
+//     //     console.log(response.data);
+//     //     setUserData(response.data);
+//     //     addUserData(response.data);
+//     //   })
+//     //   .catch((error) => {
+//     //     console.error("Error fetching user data", error);
+//     //   });
+//     try {
+//   const response = await axios({
+//     method: "get",
+//     baseURL: "https://tastetrove.onrender.com",
+//     url: "/getreq",
+//     withCredentials: true
+//   });
   
-  console.log(response.data);
-  setUserData(response.data);
-  addUserData(response.data);
-} catch (error) {
-  console.error("Error fetching user data", error);
-}
-  }, []);
+//   console.log(response.data);
+//   setUserData(response.data);
+//   addUserData(response.data);
+// } catch (error) {
+//   console.error("Error fetching user data", error);
+// }
+//   }, []);
 //   useEffect(() => {
 //   fetch("https://tastetrove.onrender.com/auth/user", {
 //     method: "GET",
