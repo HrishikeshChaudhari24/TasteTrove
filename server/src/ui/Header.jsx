@@ -27,34 +27,48 @@ function Header() {
     removeUserData(userData);
     setUserData("");
   }
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://tastetrove.onrender.com/getreq", { withCredentials: true })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setUserData(response.data);
-  //       addUserData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching user data", error);
-  //     });
-  // }, []);
+  
   useEffect(() => {
-  fetch("https://tastetrove.onrender.com/auth/user", {
-    method: "GET",
-    credentials: "include",
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Fetch Response:", data);
-      setUserData(data);
-      addUserData(data);
-    })
-    .catch(error => {
-      console.error("Fetch Error:", error);
-    });
-}, []);
+    // axios
+    //   .get("https://tastetrove.onrender.com/getreq", { withCredentials: true })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     setUserData(response.data);
+    //     addUserData(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching user data", error);
+    //   });
+    try {
+  const response = await axios({
+    method: "get",
+    baseURL: "https://tastetrove.onrender.com/getreq",
+    url: "requisitions",
+    withCredentials: true
+  });
+  
+  console.log(response.data);
+  setUserData(response.data);
+  addUserData(response.data);
+} catch (error) {
+  console.error("Error fetching user data", error);
+}
+  }, []);
+//   useEffect(() => {
+//   fetch("https://tastetrove.onrender.com/auth/user", {
+//     method: "GET",
+//     credentials: "include",
+//   })
+//     .then(response => response.json())
+//     .then(data => {
+//       console.log("Fetch Response:", data);
+//       setUserData(data);
+//       addUserData(data);
+//     })
+//     .catch(error => {
+//       console.error("Fetch Error:", error);
+//     });
+// }, []);
 
   const addUserData = (payload) => {
     dispatch(addUser(payload));
