@@ -25,6 +25,7 @@ const login=async (req, res) => {
     if(req.isAuthenticated()){
         const result=sendMail(req.user.email)
             console.log("email sent successfully "+result)
+        res.locals.user = req.user;
         res.redirect("https://taste-trove-three.vercel.app/")
     }
     else{
