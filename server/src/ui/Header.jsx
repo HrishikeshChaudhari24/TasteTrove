@@ -28,7 +28,7 @@ function Header() {
     setUserData("");
   }
   
-  useEffect(() => {
+  useEffect(async() => {
     // axios
     //   .get("https://tastetrove.onrender.com/getreq", { withCredentials: true })
     //   .then((response) => {
