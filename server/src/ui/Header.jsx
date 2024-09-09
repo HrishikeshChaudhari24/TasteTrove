@@ -42,8 +42,8 @@ function Header() {
     try {
   const response = await axios({
     method: "get",
-    baseURL: "https://tastetrove.onrender.com/getreq",
-    url: "requisitions",
+    baseURL: "https://tastetrove.onrender.com",
+    url: "/getreq",
     withCredentials: true
   });
   
