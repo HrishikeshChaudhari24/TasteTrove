@@ -50,6 +50,7 @@ app.use(
     origin: 'https://taste-trove-three.vercel.app', // Vercel frontend domain
     methods: "GET,PUT,POST,DELETE,PATCH",
     credentials: true, // Allow cookies and sessions to be sent
+    allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
   })
 );
 // for parsing data using res and request
