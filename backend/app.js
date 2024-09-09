@@ -165,7 +165,7 @@ app.use("/listing/:id/reviews", reviewRoute); //for reviews route
 
 app.get("/getreq", async (req, res) => {
   console.log(req.user);
-  res.json(req.user);
+  res.json(req);
 });
 app.use(notfound);
 app.use(errorHandler);
