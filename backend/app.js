@@ -63,18 +63,14 @@ app.use(methodOverride("_method"));
 app.use(
   expressSession({
     secret: process.env.secret,
-    saveUninitialized: false,
-    resave: false,
+    saveUninitialized: true,
+    resave: true,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: "sessions",
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 7 days
-       secure: true, // Ensure this is set to true since you are likely using HTTPS
-      // httpOnly: false, // Prevent client-side JS from accessing the cookie
-       // Allow cross-site cookies
-      // secure: true, // Set to true since we are using HTTPS
       // httpOnly: false,
     },
   })
