@@ -14,7 +14,7 @@ const Listing = require("./models/listing"); //require model listing
 const Admin = require("./models/admin"); //require model Admin
 const User = require("./models/user"); //require model User
 const allowedOrigins = ['https://taste-trove-three.vercel.app'];
-
+const axios = require('axios');
 
 
 const Review = require("./models/reviews");
@@ -164,8 +164,19 @@ app.use("/listing/:id/reviews", reviewRoute); //for reviews route
 
 
 app.get("/getreq", async (req, res) => {
-  console.log(req.user);
-  res.json(req.user);
+  // try {
+  //   // Fetch user data from the URL
+  //   const response = await axios.get('https://tastetrove.onrender.com/auth/user', {
+  //     withCredentials: true  // Ensure credentials are sent if required
+  //   });
+    
+  //   // Send the fetched user data to the frontend
+  //   res.send(response.data);
+  // } catch (error) {
+  //   console.error("Error fetching user data", error);
+  //   res.status(500).send("Error fetching user data");
+  // }
+  res.send(req.user)
 });
 app.use(notfound);
 app.use(errorHandler);
