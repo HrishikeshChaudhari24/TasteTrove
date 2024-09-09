@@ -23,9 +23,9 @@ function Header() {
   };
 
   function logout() {
-    window.open("https://tastetrove.onrender.com/auth/logout", "_self");
-    removeUserData(userData);
-    setUserData("");
+    // window.open("https://tastetrove.onrender.com/auth/logout", "_self");
+    // removeUserData(userData);
+    // setUserData("");
   }
 
   useEffect(() => {
