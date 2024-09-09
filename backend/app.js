@@ -53,6 +53,8 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
   })
 );
+
+app.options('*', cors());
 // for parsing data using res and request
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
