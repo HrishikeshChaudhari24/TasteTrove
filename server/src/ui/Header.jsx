@@ -28,18 +28,33 @@ function Header() {
     setUserData("");
   }
 
+  // useEffect(() => {
+  //   axios
+  //     .get("https://tastetrove.onrender.com/getreq", { withCredentials: true })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setUserData(response.data);
+  //       addUserData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching user data", error);
+  //     });
+  // }, []);
   useEffect(() => {
-    axios
-      .get("https://tastetrove.onrender.com/getreq", { withCredentials: true })
-      .then((response) => {
-        console.log(response.data);
-        setUserData(response.data);
-        addUserData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data", error);
-      });
-  }, []);
+  fetch("https://tastetrove.onrender.com/auth/user", {
+    method: "GET",
+    credentials: "include",
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Fetch Response:", data);
+      setUserData(data);
+      addUserData(data);
+    })
+    .catch(error => {
+      console.error("Fetch Error:", error);
+    });
+}, []);
 
   const addUserData = (payload) => {
     dispatch(addUser(payload));
