@@ -64,16 +64,17 @@ app.use(methodOverride("_method"));
 app.use(
   expressSession({
     secret: process.env.secret,
-    saveUninitialized: true,
-    resave: true,
+    saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
+    resave: false,             // Resave only if the session has changed
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: "sessions",
     }),
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // 7 days
-      
-      // httpOnly: false,
+      maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
+      httpOnly: true,               // Prevent client-side JavaScript from accessing cookies
+      secure: true,  // Only use secure cookies in production
+      sameSite: 'lax',              // Helps prevent CSRF attacks
     },
   })
 );
