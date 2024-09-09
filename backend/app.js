@@ -161,23 +161,34 @@ app.use("/order",order_route)
 app.use("/listings", listing_route); // listings router required
 app.use("/listing/:id/reviews", reviewRoute); //for reviews route
 
-
-
-app.get("/getreq", async (req, res) => {
-  // try {
-  //   // Fetch user data from the URL
-  //   const response = await axios.get('https://tastetrove.onrender.com/auth/user', {
-  //     withCredentials: true  // Ensure credentials are sent if required
-  //   });
-    
-  //   // Send the fetched user data to the frontend
-  //   res.send(response.data);
-  // } catch (error) {
-  //   console.error("Error fetching user data", error);
-  //   res.status(500).send("Error fetching user data");
-  // }
-  res.send(req.user)
+app.use((req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.locals.user = req.user; // Set up user data for internal use
+  }
+  next();
 });
+
+app.get('/getreq', (req, res) => {
+  // This route can access user data via res.locals
+  
+  res.json({ user: res.locals.user });
+});
+
+// app.get("/getreq", async (req, res) => {
+//   // try {
+//   //   // Fetch user data from the URL
+//   //   const response = await axios.get('https://tastetrove.onrender.com/auth/user', {
+//   //     withCredentials: true  // Ensure credentials are sent if required
+//   //   });
+    
+//   //   // Send the fetched user data to the frontend
+//   //   res.send(response.data);
+//   // } catch (error) {
+//   //   console.error("Error fetching user data", error);
+//   //   res.status(500).send("Error fetching user data");
+//   // }
+//   res.send(req.user)
+// });
 app.use(notfound);
 app.use(errorHandler);
 
