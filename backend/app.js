@@ -47,7 +47,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(
   cors({
-    origin: 'https://taste-trove-three.vercel.app', // Vercel frontend domain
+    origin: ['https://taste-trove-three.vercel.app','https://taste-trove-git-master-tastetroves-projects.vercel.app','https://taste-trove-6s51kscwx-tastetroves-projects.vercel.app/'], // Vercel frontend domain
     methods: "GET,PUT,POST,DELETE,PATCH",
     credentials: true, // Allow cookies and sessions to be sent
     allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
