@@ -47,14 +47,14 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(
   cors({
-    origin: ['https://taste-trove-three.vercel.app','https://taste-trove-git-master-tastetroves-projects.vercel.app','https://taste-trove-6s51kscwx-tastetroves-projects.vercel.app/'], // Vercel frontend domain
+    origin: 'https://taste-trove-three.vercel.app', // Vercel frontend domain
     methods: "GET,PUT,POST,DELETE,PATCH",
     credentials: true, // Allow cookies and sessions to be sent
-    allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
+    // allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
   })
 );
 
-app.options('*', cors());
+// app.options('*', cors());
 // for parsing data using res and request
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -64,7 +64,7 @@ const asyncWrapper = require("./middlewares/async.js");
 app.use(methodOverride("_method"));
 // initializingPassport(passport);
 app.use(
-  expressSession({
+  session({
     secret: process.env.secret,
     saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
     resave: false,             // Resave only if the session has changed
@@ -74,9 +74,9 @@ app.use(
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
-      // httpOnly: true,               // Prevent client-side JavaScript from accessing cookies
-      // secure: true,  // Only use secure cookies in production
-      // sameSite: 'none',              // Helps prevent CSRF attacks
+      httpOnly: true,               // Prevent client-side JavaScript from accessing cookies
+      secure: true,  // Only use secure cookies in production
+      sameSite: 'none',              // Helps prevent CSRF attacks
     },
   })
 );
