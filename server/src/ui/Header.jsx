@@ -33,7 +33,7 @@ function Header() {
     try {
       const response = await axios({
         method: "get",
-        baseURL: "https://tastetrove.onrender.com",
+        baseURL: "https://taste-trove-q3kw.vercel.app/",
         url: "/users",
         withCredentials: true
       });
@@ -62,7 +62,7 @@ function Header() {
 //     try {
 //   const response = await axios({
 //     method: "get",
-//     baseURL: "https://tastetrove.onrender.com",
+//     baseURL: "https://taste-trove-q3kw.vercel.app/",
 //     url: "/getreq",
 //     withCredentials: true
 //   });
