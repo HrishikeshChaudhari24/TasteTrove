@@ -31,7 +31,7 @@ const UserProfile = () => {
     const getUserData = async () => {
         try {
 
-            const response = await axios.get(`https://tastetrove.onrender.com/User/${id}`, { withCredentials: true });
+            const response = await axios.get(`https://taste-trove-q3kw.vercel.app/User/${id}`, { withCredentials: true });
             // const response = useSelector((state)=>state.userdata);
             console.log(response.data);
             // const userData = response.data;
@@ -43,7 +43,7 @@ const UserProfile = () => {
     };
     const getOrders = async () => {
         try {
-            const response = await axios.get(`https://tastetrove.onrender.com/order/${id}`, { withCredentials: true });
+            const response = await axios.get(`https://taste-trove-q3kw.vercel.app/order/${id}`, { withCredentials: true });
             console.log(response.data)
             const filteredOrders = response.data.filter(orderEntry => {
                 const orderTime = new Date(orderEntry.order.time);
@@ -66,7 +66,7 @@ const UserProfile = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`https://tastetrove.onrender.com/User/listings/${id}`, profile);
+            const response = await axios.put(`https://taste-trove-q3kw.vercel.app/User/listings/${id}`, profile);
             console.log(response.data);
             // navigate(`/profile/${id}`);
             // navigate(`profile/${id}`);
