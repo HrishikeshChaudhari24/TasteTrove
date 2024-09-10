@@ -23,7 +23,7 @@ function Header() {
   };
 
   function logout() {
-    window.open("https://tastetrove.onrender.com/auth/logout", "_self");
+    window.open("https://taste-trove-q3kw.vercel.app/auth/logout", "_self");
     removeUserData(userData);
     setUserData("");
   }
@@ -50,7 +50,7 @@ function Header() {
 }, []);
 //   useEffect(async() => {
 //     // axios
-//     //   .get("https://tastetrove.onrender.com/getreq", { withCredentials: true })
+//     //   .get("https://taste-trove-q3kw.vercel.app/getreq", { withCredentials: true })
 //     //   .then((response) => {
 //     //     console.log(response.data);
 //     //     setUserData(response.data);
@@ -75,7 +75,7 @@ function Header() {
 // }
 //   }, []);
 //   useEffect(() => {
-//   fetch("https://tastetrove.onrender.com/auth/user", {
+//   fetch("https://taste-trove-q3kw.vercel.app/auth/user", {
 //     method: "GET",
 //     credentials: "include",
 //   })
