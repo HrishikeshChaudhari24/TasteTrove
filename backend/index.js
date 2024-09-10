@@ -45,15 +45,27 @@ app.set("views", path.join(__dirname, "views"));
 // app.use(cors({ origin: 'http://localhost:3000' }));
 
 
-app.use(
-  cors({
-    origin: 'https://taste-trove-three.vercel.app', // Vercel frontend domain
-    methods: "GET,PUT,POST,DELETE,PATCH",
-    // methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'],
-    credentials: true, // Allow cookies and sessions to be sent
-    // allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
-  })
-);
+// app.use(
+//   cors({
+//     origin: 'https://taste-trove-three.vercel.app', // Vercel frontend domain
+//     methods: "GET,PUT,POST,DELETE,PATCH",
+//     // methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'],
+//     credentials: true, // Allow cookies and sessions to be sent
+//     // allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
+//   })
+// );
+const corsOptions = {
+  origin: 'https://taste-trove-three.vercel.app',
+  methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+  allowedHeaders: 'Content-Type, Authorization',
+  credentials: true,
+};
+
+// Use CORS middleware to handle CORS requests including OPTIONS
+app.use(cors(corsOptions));
+
+// Enable preflight across all routes
+app.options('*', cors(corsOptions));
 
 // app.options('*', cors());
 // for parsing data using res and request
