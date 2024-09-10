@@ -99,7 +99,7 @@ const NewListing = () => {
 
       formData.append("image", listing.image); // Append image file to FormData
       const response = await axios.post(
-        "https://tastetrove.onrender.com/listings",
+        "https://taste-trove-q3kw.vercel.app/listings",
         formData, { withCredentials: true }
       );
       console.log(response.data);
