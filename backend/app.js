@@ -63,21 +63,30 @@ const methodOverride = require("method-override");
 const asyncWrapper = require("./middlewares/async.js");
 app.use(methodOverride("_method"));
 // initializingPassport(passport);
+// app.use(
+//   expressSession({
+//     secret: process.env.secret,
+//     saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
+//     resave: false,             // Resave only if the session has changed
+//     store: MongoStore.create({
+//       mongoUrl: process.env.MONGO_URI,
+//       collectionName: "sessions",
+//     }),
+//     cookie: {
+//       maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
+//       httpOnly: true,               // Prevent client-side JavaScript from accessing cookies
+//       secure: true,  // Only use secure cookies in production
+//       sameSite: 'none',              // Helps prevent CSRF attacks
+//     },
+//   })
+// );
 app.use(
-  expressSession({
-    secret: process.env.secret,
-    saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
-    resave: false,             // Resave only if the session has changed
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
-      collectionName: "sessions",
-    }),
-    cookie: {
-      maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
-      httpOnly: true,               // Prevent client-side JavaScript from accessing cookies
-      secure: true,  // Only use secure cookies in production
-      sameSite: 'none',              // Helps prevent CSRF attacks
-    },
+  require("cookie-session")({
+    name: "session",
+    keys: [process.env.secret], // Set your secret key from env
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    secure: true, // Secure cookies in production
+    sameSite: "none", // To support cross-origin cookies
   })
 );
 app.use(passport.initialize());
