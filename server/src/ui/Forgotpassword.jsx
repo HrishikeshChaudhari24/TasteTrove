@@ -17,7 +17,7 @@ const SignInForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("https://tastetrove.onrender.com/forgotpassword", credentials).then((response) => {
+    axios.post("https://taste-trove-q3kw.vercel.app/forgotpassword", credentials).then((response) => {
       console.log(response);
       setFlag(true);
       window.open("https://taste-trove-three.vercel.app/login","_self")
