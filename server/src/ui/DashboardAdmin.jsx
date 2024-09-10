@@ -57,7 +57,7 @@ function DashboardAdmin() {
 
   //   const getUserData = async () => {
   //     try {
-  //       const response = await axios.get(`https://tastetrove.onrender.com/User/${id}`, {
+  //       const response = await axios.get(`https://taste-trove-q3kw.vercel.app/User/${id}`, {
   //         withCredentials: true,
   //       });
   //       // const response = useSelector((state)=>state.userdata);
@@ -75,7 +75,7 @@ function DashboardAdmin() {
 
   //   const getOrders = async () => {
   //     try {
-  //       const response = await axios.get(`https://tastetrove.onrender.com/order/${id}`, {
+  //       const response = await axios.get(`https://taste-trove-q3kw.vercel.app/order/${id}`, {
   //         withCredentials: true,
   //       });
   //       console.log(response.data);
@@ -165,7 +165,7 @@ function DashboardAdmin() {
   //     e.preventDefault();
   //     try {
   //       const response = await axios.put(
-  //         `https://tastetrove.onrender.com/User/listings/${id}`,
+  //         `https://taste-trove-q3kw.vercel.app/User/listings/${id}`,
   //         profile
   //       );
   //       console.log(response.data);
@@ -196,7 +196,7 @@ function DashboardAdmin() {
 
   const getUserData = async () => {
     try {
-      const response = await axios.get(`https://tastetrove.onrender.com/Owner/${id}`);
+      const response = await axios.get(`https://taste-trove-q3kw.vercel.app/Owner/${id}`);
       const userData = response.data;
       setProfile(userData);
     } catch (error) {
@@ -206,7 +206,7 @@ function DashboardAdmin() {
   const getOrders = async () => {
     try {
       const response = await axios.get(
-        `https://tastetrove.onrender.com/order/admin/${id}`,
+        `https://taste-trove-q3kw.vercel.app/order/admin/${id}`,
         { withCredentials: true }
       );
       console.log(response.data);
@@ -251,7 +251,7 @@ function DashboardAdmin() {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `https://tastetrove.onrender.com/Owner/listings/${id}`,
+        `https://taste-trove-q3kw.vercel.app/Owner/listings/${id}`,
         profile
       );
       console.log(`/profile/${id}`);
@@ -264,7 +264,7 @@ function DashboardAdmin() {
   const getData = async () => {
     try {
       const response = await axios.get(
-        `https://tastetrove.onrender.com/Owner/listings/${id}`,
+        `https://taste-trove-q3kw.vercel.app/Owner/listings/${id}`,
         { withCredentials: true }
       );
       setListings(response.data);
@@ -343,7 +343,7 @@ function DashboardAdmin() {
             <Link
               href="#"
               className="logout"
-              to={"https://tastetrove.onrender.com/auth/logout"}
+              to={"https://taste-trove-q3kw.vercel.app/auth/logout"}
             >
               <i className="bx bxs-log-out-circle"></i>
               Logout &nbsp;
