@@ -179,7 +179,7 @@ const createOrderAction = async (params) => {
     // For example, fetch additional information related to the user
 
     // Make a POST request to create a new order
-    const response = await axios.post(`https://tastetrove.onrender.com/${userid}`, {
+    const response = await axios.post(`https://taste-trove-q3kw.vercel.app/${userid}`, {
       action: 'create',
       // Include any additional data needed for creating the order
     }, { withCredentials: true });
