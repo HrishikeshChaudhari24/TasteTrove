@@ -25,7 +25,7 @@ const Index = () => {
 
   const getData = async () => {
     axios
-      .get("https://tastetrove.onrender.com/listings")
+      .get("https://taste-trove-q3kw.vercel.app/listings")
       .then((response) => {
         setlistings(response.data); // Access response.data to get the actual data
         setparentlistings(response.data)
