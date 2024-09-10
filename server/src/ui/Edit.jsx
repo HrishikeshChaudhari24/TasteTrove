@@ -36,7 +36,7 @@ const Edit = () => {
 
   useEffect(() => {
     axios
-      .get(`https://tastetrove.onrender.com/listings/${bid}`)
+      .get(`https://taste-trove-q3kw.vercel.app/listings/${bid}`)
       .then((response) => {
         setListing({
           ...Listing,
@@ -72,7 +72,7 @@ const Edit = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        ` https://tastetrove.onrender.com/listings/${bid}`,
+        ` https://taste-trove-q3kw.vercel.app/listings/${bid}`,
         Listing
       );
       console.log(response.data);
