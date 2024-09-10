@@ -2,16 +2,5 @@
   "version": 2,
   "builds": [{ "src": "./app.js", "use": "@vercel/node" }],
   "routes": [{ "src": "/(.*)", "dest": "/" }],
-   "rewrites":[
-    {"source":"/(.*)","destination":"/"}
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "https://taste-trove-three.vercel.app" },
-        { "key": "Access-Control-Allow-Credentials", "value": "true" }
-      ]
-    }
-  ]
+  
 }
