@@ -17,12 +17,12 @@ const SignInForm = () => {
   // Function to handle Google sign-in
   const handleGoogleSignIn = () => {
     // Implement the logic for Google Sign-In here
-    window.open("https://tastetrove.onrender.com/auth/google", "_self");
+    window.open("https://taste-trove-q3kw.vercel.app/auth/google", "_self");
     console.log("Google Sign-In clicked");
   };
   const handleAdminGoogleSignIn = () => {
     // Implement the logic for Google Sign-In here
-    window.open("https://tastetrove.onrender.com/admin/auth/google", "_self");
+    window.open("https://taste-trove-q3kw.vercel.app/admin/auth/google", "_self");
     console.log("Google Admin Sign-In clicked");
   };
   // useEffect(() => {
@@ -61,7 +61,7 @@ const SignInForm = () => {
       {credentials.selectValue == "Customer" ? (
         <>
           <form
-            action="https://tastetrove.onrender.com/register"
+            action="https://taste-trove-q3kw.vercel.app/register"
             method="post"
             className="form"
           >
@@ -147,7 +147,7 @@ const SignInForm = () => {
       ) : credentials.selectValue == "MessOwner" ? (
         <>
           <form
-            action="https://tastetrove.onrender.com/admin/register"
+            action="https://taste-trove-q3kw.vercel.app/admin/register"
             method="post"
             className="form"
           >
