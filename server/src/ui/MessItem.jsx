@@ -41,7 +41,7 @@ const MessItem = (listing) => {
   const navigate = useNavigate();
 
   const deleteListing = async (id) => {
-    axios.delete(`https://tastetrove.onrender.com/listings/${id}`);
+    axios.delete(`https://taste-trove-q3kw.vercel.app/listings/${id}`);
     // getData()
   };
   const dispatch = useDispatch();
