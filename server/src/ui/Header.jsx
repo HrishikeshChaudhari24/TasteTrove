@@ -33,7 +33,7 @@ function Header() {
     try {
       const response = await axios({
         method: "get",
-        baseURL: "https://taste-trove-q3kw.vercel.app/",
+        baseURL: "https://taste-trove-q3kw.vercel.app",
         url: "/users",
         withCredentials: true
       });
