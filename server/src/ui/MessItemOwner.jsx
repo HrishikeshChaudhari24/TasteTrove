@@ -32,7 +32,7 @@ const MessItemOwner = (listing) => {
 
 
     const deleteListing = async (id) => {
-        axios.delete(`https://tastetrove.onrender.com/listings/${id}`);
+        axios.delete(`https://taste-trove-q3kw.vercel.app/listings/${id}`);
         // getData()
     };
 
