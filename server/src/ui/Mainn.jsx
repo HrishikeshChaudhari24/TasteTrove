@@ -51,7 +51,7 @@ const Mainn = () => {
       console.log(info.dishname);
       console.log(info);
       const response = await axios.post(
-        `https://tastetrove.onrender.com/listings/${bid}/weeklymenu`,
+        `https://taste-trove-q3kw.vercel.app/listings/${bid}/weeklymenu`,
         info, { withCredentials: true }
       );
       setInfo({
@@ -76,12 +76,12 @@ const Mainn = () => {
   };
 
   const deleteListing = async (id) => {
-    axios.delete(`https://tastetrove.onrender.com/listings/${id}`, { withCredentials: true });
+    axios.delete(`https://taste-trove-q3kw.vercel.app/listings/${id}`, { withCredentials: true });
   };
 
   const deleteReview = async (id) => {
-    // axios.delete(`https://tastetrove.onrender.com/listings/${bid}/${id}/reviews`,{withCredentials: true});
-    axios.delete(`https://tastetrove.onrender.com/listing/${bid}/reviews/${id}`, {
+    // axios.delete(`https://taste-trove-q3kw.vercel.app/listings/${bid}/${id}/reviews`,{withCredentials: true});
+    axios.delete(`https://taste-trove-q3kw.vercel.app/listing/${bid}/reviews/${id}`, {
       withCredentials: true,
     })
   };
@@ -93,7 +93,7 @@ const Mainn = () => {
 
   const getData = async () => {
     axios
-      .get(`https://tastetrove.onrender.com/listings/${bid}`, { withCredentials: true })
+      .get(`https://taste-trove-q3kw.vercel.app/listings/${bid}`, { withCredentials: true })
       .then((response) => {
         setListing(response.data);
       })
@@ -104,7 +104,7 @@ const Mainn = () => {
 
   const getDataR = async () => {
     axios
-      .get(`https://tastetrove.onrender.com/listing/${bid}/reviews`, { withCredentials: true })
+      .get(`https://taste-trove-q3kw.vercel.app/listing/${bid}/reviews`, { withCredentials: true })
       .then((response) => {
         setReviews(response.data);
       })
@@ -117,7 +117,7 @@ const Mainn = () => {
     e.preventDefault();
     console.log(Review);
     const response = await axios.post(
-      `https://tastetrove.onrender.com/listing/${bid}/reviews`,
+      `https://taste-trove-q3kw.vercel.app/listing/${bid}/reviews`,
       Review , { withCredentials: true }
     );
     console.log("hello");
@@ -161,7 +161,7 @@ const Mainn = () => {
   const deletemenu = async (day, type, name) => {
     console.log("hello");
     axios.delete(
-      `https://tastetrove.onrender.com/listings/${bid}/dish/${day}/${type}/${name}`
+      `https://taste-trove-q3kw.vercel.app/listings/${bid}/dish/${day}/${type}/${name}`
       , { withCredentials: true });
     window.location.reload(); // Refresh the page
   };
