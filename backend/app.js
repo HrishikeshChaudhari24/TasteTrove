@@ -64,7 +64,7 @@ const asyncWrapper = require("./middlewares/async.js");
 app.use(methodOverride("_method"));
 // initializingPassport(passport);
 app.use(
-  session({
+  expressSession({
     secret: process.env.secret,
     saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
     resave: false,             // Resave only if the session has changed
