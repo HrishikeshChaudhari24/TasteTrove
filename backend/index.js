@@ -96,7 +96,7 @@ app.use(methodOverride("_method"));
 
 
 
-app.set('trust proxy', 1); // Trust the x-forwarded-proto header
+// app.set('trust proxy', 1); // Trust the x-forwarded-proto header
 
 // Session configuration with dynamic SameSite and Secure options
 app.use(expressSession({
