@@ -54,22 +54,29 @@ app.set("views", path.join(__dirname, "views"));
 //     // allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
 //   })
 // );
-const corsOptions = {
-  origin: 'https://taste-trove-three.vercel.app',
-  methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-  // allowedHeaders: 'Content-Type, Authorization',
-  credentials: true,
-   allowedHeaders: [
-      "set-cookie",
-      "Content-Type",
-      "Access-Control-Allow-Origin",
-      "Access-Control-Allow-Credentials",
-    ]
-};
+// const corsOptions = {
+//   origin: 'https://taste-trove-three.vercel.app',
+//   methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+//   // allowedHeaders: 'Content-Type, Authorization',
+//   credentials: true,
+//    allowedHeaders: [
+//       "set-cookie",
+//       "Content-Type",
+//       "Access-Control-Allow-Origin",
+//       "Access-Control-Allow-Credentials",
+//     ]
+// };
 
-// Use CORS middleware to handle CORS requests including OPTIONS
-app.use(cors(corsOptions));
-
+// // Use CORS middleware to handle CORS requests including OPTIONS
+// app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin:
+      "https://taste-trove-three.vercel.app",
+    methods: "GET,PUT,POST,DELETE,PATCH",
+    credentials: true,
+  })
+);
 // Enable preflight across all routes
 // app.options('*', cors(corsOptions));
 
@@ -83,22 +90,40 @@ const asyncWrapper = require("./middlewares/async.js");
 app.use(methodOverride("_method"));
 // initializingPassport(passport);
 // app.set('trust proxy', 1); // Trust the x-forwarded-proto header
+// app.use(
+//   expressSession({
+//     secret: process.env.secret,
+//     saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
+//     resave: false,             // Resave only if the session has changed
+//     // name: 'MyCoolWebAppCookieName',
+//     // proxy:true,
+//     store: MongoStore.create({
+//       mongoUrl: process.env.MONGO_URI,
+//       collectionName: "sessions",
+//     }),
+//     cookie: {
+//       maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
+//       // httpOnly: false,               // Prevent client-side JavaScript from accessing cookies
+//       sameSite: 'none',              // Helps prevent CSRF attacks
+//       // secure: true,  // Only use secure cookies in production
+//     },
+//   })
+// );
+app.set("trust proxy", 1);
 app.use(
   expressSession({
     secret: process.env.secret,
-    saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
-    resave: false,             // Resave only if the session has changed
-    // name: 'MyCoolWebAppCookieName',
-    // proxy:true,
+    saveUninitialized: true,
+    resave: true,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: "sessions",
     }),
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
-      // httpOnly: false,               // Prevent client-side JavaScript from accessing cookies
-      sameSite: 'none',              // Helps prevent CSRF attacks
-      // secure: true,  // Only use secure cookies in production
+      maxAge: 24 * 60 * 60 * 1000, // 7 days
+      httpOnly: false,
+      secure: true,
+      sameSite: "none",
     },
   })
 );
@@ -152,6 +177,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 //http://localhost:3000/Owner/listings/:id
 //http://localhost:3000/Owner/listings/${id}
+res.header(
+    "Access-Control-Allow-Origin",
+    "https://taste-trove-three.vercel.app"
+  );
+  res.header("Access-Control-Allow-Credentials", true);
+
+  next();
+});
 
 app.put('/Owner/listings/:id', async (req, res) => {
   try {
