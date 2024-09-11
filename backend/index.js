@@ -210,7 +210,7 @@ app.get(
       console.log(req.user);
       res.status(200).send(req.user);
     } else {
-      console.log(req);
+      // console.log(req);
       console.log("Hello")
       res.status(400).json({ message: "unAuthorized" });
     }
