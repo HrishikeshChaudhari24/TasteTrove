@@ -103,7 +103,7 @@ app.use(expressSession({
   secret: process.env.secret,
   resave: false,
   saveUninitialized: true,
-  proxy:true,
+  // proxy:true,
   name: 'MyCoolWebAppCookieName', 
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }), // MongoDB store
   cookie: {
