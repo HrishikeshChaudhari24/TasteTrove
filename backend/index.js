@@ -59,6 +59,12 @@ const corsOptions = {
   methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
   // allowedHeaders: 'Content-Type, Authorization',
   credentials: true,
+   allowedHeaders: [
+      "set-cookie",
+      "Content-Type",
+      "Access-Control-Allow-Origin",
+      "Access-Control-Allow-Credentials",
+    ]
 };
 
 // Use CORS middleware to handle CORS requests including OPTIONS
