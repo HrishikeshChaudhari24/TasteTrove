@@ -76,12 +76,14 @@ const methodOverride = require("method-override");
 const asyncWrapper = require("./middlewares/async.js");
 app.use(methodOverride("_method"));
 // initializingPassport(passport);
+// app.set('trust proxy', 1); // Trust the x-forwarded-proto header
 app.use(
   expressSession({
     secret: process.env.secret,
     saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
     resave: false,             // Resave only if the session has changed
     // name: 'MyCoolWebAppCookieName',
+    // proxy:true,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: "sessions",
@@ -89,7 +91,7 @@ app.use(
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
       // httpOnly: false,               // Prevent client-side JavaScript from accessing cookies
-      // sameSite: 'none',              // Helps prevent CSRF attacks
+      sameSite: 'none',              // Helps prevent CSRF attacks
       // secure: true,  // Only use secure cookies in production
     },
   })
@@ -97,7 +99,6 @@ app.use(
 
 
 
-// app.set('trust proxy', 1); // Trust the x-forwarded-proto header
 
 // Session configuration with dynamic SameSite and Secure options
 // app.use(expressSession({
