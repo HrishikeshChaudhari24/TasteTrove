@@ -76,43 +76,44 @@ const methodOverride = require("method-override");
 const asyncWrapper = require("./middlewares/async.js");
 app.use(methodOverride("_method"));
 // initializingPassport(passport);
-// app.use(
-//   expressSession({
-//     secret: process.env.secret,
-//     saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
-//     resave: false,             // Resave only if the session has changed
-//     store: MongoStore.create({
-//       mongoUrl: process.env.MONGO_URI,
-//       collectionName: "sessions",
-//     }),
-//     cookie: {
-//       maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
-//       // httpOnly: true,               // Prevent client-side JavaScript from accessing cookies
-//       sameSite: 'none',              // Helps prevent CSRF attacks
-//       secure: true,  // Only use secure cookies in production
-//     },
-//   })
-// );
+app.use(
+  expressSession({
+    secret: process.env.secret,
+    saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
+    resave: false,             // Resave only if the session has changed
+    name: 'MyCoolWebAppCookieName',
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: "sessions",
+    }),
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
+      httpOnly: false,               // Prevent client-side JavaScript from accessing cookies
+      sameSite: 'none',              // Helps prevent CSRF attacks
+      secure: true,  // Only use secure cookies in production
+    },
+  })
+);
 
 
 
 // app.set('trust proxy', 1); // Trust the x-forwarded-proto header
 
 // Session configuration with dynamic SameSite and Secure options
-app.use(expressSession({
-  secret: process.env.secret,
-  resave: false,
-  saveUninitialized: true,
-  // proxy:true,
-  name: 'MyCoolWebAppCookieName', 
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }), // MongoDB store
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
-    httpOnly: false, // Prevent access from JavaScript
-    secure: true, // Secure will be determined based on the x-forwarded-proto header
-    same_site: 'none', // SameSite=None for cookies to be sent in cross-site contexts
-  }
-}));
+// app.use(expressSession({
+//   secret: process.env.secret,
+//   resave: false,
+//   saveUninitialized: true,
+//   // proxy:true,
+//   name: 'MyCoolWebAppCookieName', 
+//   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }), // MongoDB store
+//   cookie: {
+//     maxAge: 24 * 60 * 60 * 1000, // 1 day
+//     httpOnly: false, // Prevent access from JavaScript
+//     secure: true, // Secure will be determined based on the x-forwarded-proto header
+//     sameSite: 'none', // SameSite=None for cookies to be sent in cross-site contexts
+//   }
+// }));
 
 // Middleware to conditionally set iframe permissions
 // app.use((req, res, next) => {
