@@ -65,7 +65,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Enable preflight across all routes
-app.options('*', cors(corsOptions));
+// app.options('*', cors(corsOptions));
 
 // app.options('*', cors());
 // for parsing data using res and request
@@ -115,17 +115,17 @@ app.use(expressSession({
 }));
 
 // Middleware to conditionally set iframe permissions
-app.use((req, res, next) => {
-  const internalPaths = ['/status', '/admin','/users','/auth/users']; // List of internal pages
-  if (internalPaths.includes(req.path)) {
-    // For internal paths, block iframe embedding
-    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-  } else {
-    // For public pages, allow iframe embedding from any origin
-    res.setHeader('X-Frame-Options', 'ALLOWALL');
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   const internalPaths = ['/status', '/admin','/users','/auth/users']; // List of internal pages
+//   if (internalPaths.includes(req.path)) {
+//     // For internal paths, block iframe embedding
+//     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+//   } else {
+//     // For public pages, allow iframe embedding from any origin
+//     res.setHeader('X-Frame-Options', 'ALLOWALL');
+//   }
+//   next();
+// });
 
 
 
