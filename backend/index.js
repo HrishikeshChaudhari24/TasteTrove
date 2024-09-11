@@ -110,7 +110,7 @@ app.use(expressSession({
     maxAge: 24 * 60 * 60 * 1000, // 1 day
     httpOnly: false, // Prevent access from JavaScript
     secure: true, // Secure will be determined based on the x-forwarded-proto header
-    sameSite: 'none', // SameSite=None for cookies to be sent in cross-site contexts
+    same_site: 'none', // SameSite=None for cookies to be sent in cross-site contexts
   }
 }));
 
