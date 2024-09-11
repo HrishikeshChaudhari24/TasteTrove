@@ -81,7 +81,7 @@ app.use(
     secret: process.env.secret,
     saveUninitialized: false,  // Typically, you don't want to save uninitialized sessions
     resave: false,             // Resave only if the session has changed
-    name: 'MyCoolWebAppCookieName',
+    // name: 'MyCoolWebAppCookieName',
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: "sessions",
