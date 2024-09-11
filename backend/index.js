@@ -88,9 +88,9 @@ app.use(
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,  // 1 day, adjust if necessary
-      httpOnly: false,               // Prevent client-side JavaScript from accessing cookies
-      sameSite: 'none',              // Helps prevent CSRF attacks
-      secure: true,  // Only use secure cookies in production
+      // httpOnly: false,               // Prevent client-side JavaScript from accessing cookies
+      // sameSite: 'none',              // Helps prevent CSRF attacks
+      // secure: true,  // Only use secure cookies in production
     },
   })
 );
