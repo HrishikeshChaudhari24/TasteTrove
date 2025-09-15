@@ -106,6 +106,7 @@ function Header() {
 
       <div className="flex justify-between items-center space-x-16 px-4 font-semibold">
         <Link to="/">Home</Link>
+         <Link to="/nearby" style={{ marginRight: '20px' }}>📍 Find Nearby Messes</Link>
         <Link to="/allListings">All Mess</Link>
 
         <SearchOrder />
