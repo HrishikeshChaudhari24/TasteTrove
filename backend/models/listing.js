@@ -58,201 +58,158 @@
 // module.exports=Listing;
 
 const mongoose = require('mongoose');
-const dish = require('./dish.js')
-const User=require('./user.js')
-const Order=require('./order.js')
-const listingSchema = mongoose.Schema(
-    {
-        name: {
-            type: String,
-            // required:true,
-            minlength: 1,
-            maxlength: 50,
-            // trim:true,
-            //  match: /^[a-zA-Z\s]+$/,
-        },
-        rating: {
-            type: Number,
-            min: 0,
-            max: 5,
-            validate: {
-                validator: function (value) {
-                    return /^(\d*\.)?\d{1}$/.test(value);
-                },
-                message: 'Invalid rating format. Should be a number with at most one decimal place.',
+const dish = require('./dish.js');
+const User = require('./user.js');
+const Order = require('./order.js');
+
+const listingSchema = mongoose.Schema({
+    name: {
+        type: String,
+        minlength: 1,
+        maxlength: 50,
+    },
+    rating: {
+        type: Number,
+        min: 0,
+        max: 5,
+        validate: {
+            validator: function (value) {
+                return /^(\d*\.)?\d{1}$/.test(value);
             },
+            message: 'Invalid rating format. Should be a number with at most one decimal place.',
         },
-        image: {
-            url: String,
-            filename: String
+    },
+    image: {
+        url: String,
+        filename: String
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Admin'
+    },
+    pricePerMeal: {
+        type: Number,
+    },
+    pricePerMonth: {
+        type: Number,
+    },
+    address: {
+        type: String,
+        minlength: 3,
+        maxlength: 200,
+        trim: true
+    },
+    dishes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Dish'
+    }],
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review'
+    }],
+    OpearationalDirectives: {
+        type: String,
+    },
+
+    // KEEP these existing fields for backward compatibility
+    latitude: {
+        type: String
+    },
+    longitude: {
+        type: String
+    },
+
+    // ADD this new GeoJSON location field for geospatial queries
+    location: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point'
         },
-        owner: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Admin'
-        }
-        ,
-        pricePerMeal: {
-            type: Number,
-        },
-        pricePerMonth: {
-            type: Number,
+        coordinates: {
+            type: [Number], // [longitude, latitude] - MongoDB format
+            index: '2dsphere' // Creates geospatial index
         },
         address: {
-            type: String,
-            minlength: 3,
-            maxlength: 200,
-            trim: true
-        },
-        dishes: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Dish'
-
-            }
-        ],
-        reviews: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Review'
-            }
-        ],
-        OpearationalDirectives:{
-            type:String,
+            street: String,
+            city: String,
+            state: String,
+            pincode: String
         }
-        ,
-        latitude: {
-            type: String
+    },
+
+    MorningStart: {
+        type: String
+    },
+    MorningEnd: {
+        type: String
+    },
+    NightStart: {
+        type: String
+    },
+    NightEnd: {
+        type: String
+    },
+    orders: [{
+        orderId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Order',
         },
-        longitude: {
-            type: String
+        userid: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
         }
-        ,
-        MorningStart: {
-            type: String
-        },
-        MorningEnd: {
-            type: String
-        },
+    }],
 
-        NightStart: {
-            type: String
+    // Your existing days structure remains exactly the same
+    days: {
+        Monday: {
+            name: { type: String },
+            breakFast: [{ type: String }],
+            lunch: [{ type: String }],
+            dinner: [{ type: String }]
         },
-        NightEnd: {
-            type: String
+        Tuesday: {
+            name: { type: String },
+            breakFast: [{ type: String }],
+            lunch: [{ type: String }],
+            dinner: [{ type: String }]
         },
-        orders:[{
-            orderId:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Order',
-            },
-            userid:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User',
-            }
-        }]
-
-                
-                
-        ,  
-        days: {
-            Monday: {
-                name: {
-                    type: String,
-                }, breakFast: [{
-                    type: String,
-                }],
-                lunch: [{
-                    type: String,
-                }],
-                dinner: [{
-                    type: String,
-                }]
-            },
-            Tuesday: {
-                name: {
-                    type: String,
-                }, breakFast: [{
-                    type: String,
-                }],
-                lunch: [{
-                    type: String,
-                }],
-                dinner: [{
-                    type: String,
-                }]
-            },
-            Wednesday: {
-                name: {
-                    type: String,
-                }, breakFast: [{
-                    type: String,
-                }],
-                lunch: [{
-                    type: String,
-                }],
-                dinner: [{
-                    type: String,
-                }]
-            },
-            Thursday: {
-                name: {
-                    type: String,
-                }, breakFast: [{
-                    type: String,
-                }],
-                lunch: [{
-                    type: String,
-                }],
-                dinner: [{
-                    type: String,
-                }]
-            },
-            Friday: {
-                name: {
-                    type: String,
-                }, breakFast: [{
-                    type: String,
-                }],
-                lunch: [{
-                    type: String,
-                }],
-                dinner: [{
-                    type: String,
-                }]
-            },
-            Saturday: {
-                name: {
-                    type: String,
-                }, breakFast: [{
-                    type: String,
-                }],
-                lunch: [{
-                    type: String,
-                }],
-                dinner: [{
-                    type: String,
-                }]
-            },
-            Sunday: {
-                name: {
-                    type: String,
-                }, breakFast: [{
-                    type: String,
-                }],
-                lunch: [{
-                    type: String,
-                }],
-                dinner: [{
-                    type: String,
-                }]
-            },
-
+        Wednesday: {
+            name: { type: String },
+            breakFast: [{ type: String }],
+            lunch: [{ type: String }],
+            dinner: [{ type: String }]
+        },
+        Thursday: {
+            name: { type: String },
+            breakFast: [{ type: String }],
+            lunch: [{ type: String }],
+            dinner: [{ type: String }]
+        },
+        Friday: {
+            name: { type: String },
+            breakFast: [{ type: String }],
+            lunch: [{ type: String }],
+            dinner: [{ type: String }]
+        },
+        Saturday: {
+            name: { type: String },
+            breakFast: [{ type: String }],
+            lunch: [{ type: String }],
+            dinner: [{ type: String }]
+        },
+        Sunday: {
+            name: { type: String },
+            breakFast: [{ type: String }],
+            lunch: [{ type: String }],
+            dinner: [{ type: String }]
         }
-
     }
+});
 
-)
+// ADD this geospatial index for location-based queries
+listingSchema.index({ location: '2dsphere' });
 
 const Listing = mongoose.model("Listing", listingSchema);
-
 module.exports = Listing;
