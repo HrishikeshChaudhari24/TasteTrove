@@ -29,6 +29,7 @@ import UserProfile from './ui/UserProfile'
 import "./index.css";
 import AdminHub from "./ui/Dashboard"
 import DashboardAdmin from "./ui/DashboardAdmin"
+import NearbyMesses from './components/NearbyMesses';
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
@@ -118,6 +119,11 @@ const router = createBrowserRouter([
         path: "/login/resetPassword/:token",
         element: <ResetPassword />,
       },
+      {
+        path: "/nearby",
+        element: <NearbyMesses />,
+        
+      }
       // {
       //   path: "/dashboard",
       //   element: <AdminHub />,
