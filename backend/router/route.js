@@ -163,4 +163,112 @@ router.post('/:id/weeklymenu', asyncHandler(async (req, res) => {
   res.json(listing.days);
 }));
 
+// ADD this at the top with your existing imports (if not already there)
+// const express = require('express');
+// const router = express.Router();
+// const Listing = require("../models/listing.js");
+
+// ADD this helper function for distance calculation
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371e3; // Earth's radius in meters
+    const φ1 = lat1 * Math.PI/180;
+    const φ2 = lat2 * Math.PI/180;
+    const Δφ = (lat2-lat1) * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    return R * c; // Distance in meters
+};
+
+// ADD this new route for nearby search
+router.post('/nearby', async (req, res) => {
+    const { latitude, longitude, radius = 5000, limit = 20 } = req.body;
+    
+    // Input validation
+    if (!latitude || !longitude) {
+        return res.status(400).json({ 
+            message: 'Latitude and longitude are required' 
+        });
+    }
+    
+    // Validate coordinate ranges
+    if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+        return res.status(400).json({ 
+            message: 'Invalid coordinates' 
+        });
+    }
+    
+    try {
+        console.log(`Searching for messes near: ${latitude}, ${longitude} within ${radius}m`);
+        
+        // MongoDB geospatial query using $near operator
+        const nearbyMesses = await Listing.find({
+            location: {
+                $near: {
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [parseFloat(longitude), parseFloat(latitude)] // [lng, lat]
+                    },
+                    $maxDistance: parseInt(radius) // Distance in meters
+                }
+            }
+            // Remove any isActive filter if you don't have that field yet
+        })
+        .limit(parseInt(limit))
+        .lean()
+        .select('name location address pricePerMeal pricePerMonth rating image owner MorningStart MorningEnd NightStart NightEnd days');
+        
+        console.log(`Found ${nearbyMesses.length} nearby messes`);
+        
+        // Add distance calculation to each mess
+        const messesWithDistance = nearbyMesses.map(mess => {
+            if (!mess.location || !mess.location.coordinates) {
+                return { ...mess, distance: null, distanceText: 'Distance unavailable' };
+            }
+            
+            const distance = calculateDistance(
+                parseFloat(latitude), 
+                parseFloat(longitude),
+                mess.location.coordinates[1], // latitude from coordinates
+                mess.location.coordinates[0]  // longitude from coordinates
+            );
+            
+            return {
+                ...mess,
+                distance: Math.round(distance), // Distance in meters
+                distanceText: distance < 1000 
+                    ? `${Math.round(distance)}m` 
+                    : `${(distance / 1000).toFixed(1)}km`
+            };
+        });
+        
+        res.json({
+            success: true,
+            count: messesWithDistance.length,
+            userLocation: { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
+            searchRadius: parseInt(radius),
+            messes: messesWithDistance
+        });
+        
+    } catch (error) {
+        console.error('Nearby search error:', error);
+        res.status(500).json({ 
+            message: 'Failed to find nearby messes',
+            error: error.message 
+        });
+    }
+});
+
+// Your existing routes remain the same...
+// router.get('/', async (req, res) => { ... });
+// router.post('/', upload.single('image'), async (req, res) => { ... });
+// etc.
+
+// module.exports = router;
+
+
 module.exports = router;
