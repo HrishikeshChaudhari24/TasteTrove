@@ -1,74 +1,85 @@
 /* eslint-disable no-undef */
-// const express=require('express')
-// const router=express.Router({ mergeParams: true });
-// const {createNewReview,DeleteReview}=require('../controllers/reviews.js')
-
-// router.route('/reviews')
-//     .post(createNewReview)
-
-// router.route('/:reviewId/reviews')
-//     .delete(DeleteReview)
-
-// module.exports=router
-
 const express = require('express')
 const router = express.Router({ mergeParams: true });
 const { createNewReview, DeleteReview } = require('../controllers/reviews.js')
-const Listing = require("../models/listing.js"); //require model listing
+const Listing = require("../models/listing.js");
 const Review = require("../models/reviews.js");
-// router.route('/reviews')
-//     .post(createNewReview)
 
-// router.route('/:reviewId/reviews')
-//     .delete(DeleteReview)
+// Async error handler to avoid repetitive try-catch
+const asyncHandler = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
+};
 
-router.get('/', async (req, res) => {
-    // console.log('get(/listing/:id/reviews)')
-    try {
-        const listing = await Listing.findById(req.params.id).populate({
-            path: 'reviews',
-            populate: {
-                path: 'Author', // Populate the 'Author' field in each review
-                model: 'User' // Assuming 'User' is the correct model name
-            }
-        });
-        
-        // console.log(listing.reviews)
-        res.status(200).json(listing.reviews);
-    } catch (error) {
-        res.status(500).json({ "error": error })
+// GET all reviews for a listing - optimized with lean() and error handling
+router.get('/', asyncHandler(async (req, res) => {
+  // console.log('get(/listing/:id/reviews)')
+  const listing = await Listing.findById(req.params.id).populate({
+    path: 'reviews',
+    populate: {
+      path: 'Author',
+      model: 'User'
     }
-})
+  }).lean();
+  
+  if (!listing) {
+    return res.status(404).json({ error: 'Listing not found' });
+  }
+  
+  // console.log(listing.reviews)
+  res.status(200).json(listing.reviews || []);
+}));
 
-router.post('/', async (req, res) => {
-    // console.log('post(/listing/:id/reviews)')
-    let { id } = req.params;
-    let listing = await Listing.findById(id);
-    let newreview = new Review(req.body);
-    listing.reviews.push(newreview);
-    // if(req.user){
-    //     newreview.Author=req.user;
-    // }
-    console.log(req.user);
-    if(req.user){
-        newreview.Author = req.user._id;
-        // newreview.Author=req.user;
-    }
-    console.log("review add!");
-    console.log(req.user);
-    await newreview.save();
-    await listing.save();
-    res.status(200).json(newreview);
-})
+// POST new review - optimized with validation and efficient saves
+router.post('/', asyncHandler(async (req, res) => {
+  // console.log('post(/listing/:id/reviews)')
+  const { id } = req.params;
+  
+  const listing = await Listing.findById(id);
+  if (!listing) {
+    return res.status(404).json({ error: 'Listing not found' });
+  }
+  
+  const newreview = new Review(req.body);
+  
+  console.log(req.user);
+  if (req.user) {
+    newreview.Author = req.user._id;
+    // newreview.Author=req.user;
+  }
+  
+  console.log("review add!");
+  console.log(req.user);
+  
+  // Save review first, then update listing
+  await newreview.save();
+  
+  listing.reviews.push(newreview._id); // Store ObjectId reference instead of full document
+  await listing.save();
+  
+  res.status(200).json(newreview);
+}));
 
-router.delete('/:reviewId', async (req, res) => {
-    // console.log("delete review");
-    let { id, reviewId } = req.params;
-    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });//remove review from reviews array whose id=reviewId
-    let review = await Review.findByIdAndDelete(reviewId);
-    console.log(review);
-    console.log(req.user);
-    res.status(200).json(review);
-})
+// DELETE review - optimized with validation and atomic operations
+router.delete('/:reviewId', asyncHandler(async (req, res) => {
+  // console.log("delete review");
+  const { id, reviewId } = req.params;
+  
+  // Check if review exists before attempting deletion
+  const review = await Review.findById(reviewId);
+  if (!review) {
+    return res.status(404).json({ error: 'Review not found' });
+  }
+  
+  // Remove review from listing's reviews array
+  await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+  
+  // Delete the review document
+  await Review.findByIdAndDelete(reviewId);
+  
+  console.log(review);
+  console.log(req.user);
+  
+  res.status(200).json(review);
+}));
 
-module.exports = router
+module.exports = router;
