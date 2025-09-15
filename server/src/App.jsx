@@ -29,7 +29,7 @@ import UserProfile from './ui/UserProfile'
 import "./index.css";
 import AdminHub from "./ui/Dashboard"
 import DashboardAdmin from "./ui/DashboardAdmin"
-import NearByMesses from './ui/NearByMesses';
+import NearbyMesses from './ui/NearByMesses';
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
@@ -121,7 +121,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/nearby",
-        element: <NearByMesses />,
+        element: <NearbyMesses />,
         
       }
       // {
