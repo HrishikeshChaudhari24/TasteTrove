@@ -2,18 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-// const MAPBOX_TOKEN = 'YOUR_MAPBOX_ACCESS_TOKEN'; // Replace with your actual token
-const MAPBOX_TOKEN =
-  "pk.eyJ1Ijoic2lkZGhhcnRoMDAwMjciLCJhIjoiY2xxNHF3dHQ3MGI4ZzJwbGhidm4xcXpxNyJ9.HRP80FyJvTuJrvCagzw8Aw";
+const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2lkZGhhcnRoMDAwMjciLCJhIjoiY2xxNHF3dHQ3MGI4ZzJwbGhidm4xcXpxNyJ9.HRP80FyJvTuJrvCagzw8Aw'; // Replace with your actual token
 
 const NearbyMesses = () => {
     const [messes, setMesses] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
+    const [searchLocation, setSearchLocation] = useState(null); // NEW: Custom search location
     const [radius, setRadius] = useState(5000);
     const [selectedMess, setSelectedMess] = useState(null);
     const [showMap, setShowMap] = useState(true);
+    const [showLocationPopup, setShowLocationPopup] = useState(false); // NEW: Show popup for custom pin
+    const [locationMode, setLocationMode] = useState('live'); // NEW: 'live' or 'custom'
     const mapRef = useRef();
 
     // Map viewport state
@@ -25,7 +26,7 @@ const NearbyMesses = () => {
         height: 500
     });
 
-    // Inline styles
+    // Inline styles (keeping existing + new ones)
     const styles = {
         container: {
             maxWidth: '1200px',
@@ -49,6 +50,16 @@ const NearbyMesses = () => {
             flexWrap: 'wrap',
             marginBottom: '20px'
         },
+        locationModeRow: { // NEW: Location mode selector
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '20px',
+            marginBottom: '20px',
+            padding: '15px',
+            backgroundColor: '#f8f9fa',
+            borderRadius: '8px'
+        },
         refreshBtn: {
             backgroundColor: '#007bff',
             color: 'white',
@@ -58,6 +69,19 @@ const NearbyMesses = () => {
             cursor: 'pointer',
             fontSize: '16px',
             transition: 'background-color 0.3s'
+        },
+        locationModeBtn: { // NEW: Mode toggle buttons
+            backgroundColor: '#6c757d',
+            color: 'white',
+            border: 'none',
+            padding: '10px 20px',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            transition: 'background-color 0.3s'
+        },
+        activeModeBtn: { // NEW: Active mode button
+            backgroundColor: '#28a745'
         },
         toggleBtn: {
             backgroundColor: '#28a745',
@@ -106,6 +130,18 @@ const NearbyMesses = () => {
             border: '3px solid white',
             boxShadow: '0 2px 4px rgba(0,0,0,0.3)'
         },
+        searchMarker: { // NEW: Custom search location marker
+            width: '25px',
+            height: '25px',
+            borderRadius: '50%',
+            backgroundColor: '#ffc107',
+            border: '3px solid white',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+            cursor: 'grab'
+        },
+        searchMarkerDragging: { // NEW: Dragging state
+            cursor: 'grabbing'
+        },
         popup: {
             maxWidth: '250px'
         },
@@ -139,8 +175,21 @@ const NearbyMesses = () => {
             fontSize: '12px',
             marginTop: '8px'
         },
-        listContainer: {
-            marginTop: '20px'
+        locationInfo: {
+            backgroundColor: '#e7f3ff',
+            padding: '10px',
+            borderRadius: '6px',
+            margin: '15px 0',
+            fontSize: '14px',
+            color: '#0066cc'
+        },
+        customLocationInfo: { // NEW: Custom location info
+            backgroundColor: '#fff3cd',
+            padding: '10px',
+            borderRadius: '6px',
+            margin: '15px 0',
+            fontSize: '14px',
+            color: '#856404'
         },
         error: {
             backgroundColor: '#f8d7da',
@@ -156,14 +205,6 @@ const NearbyMesses = () => {
             color: '#666',
             fontSize: '18px'
         },
-        locationInfo: {
-            backgroundColor: '#e7f3ff',
-            padding: '10px',
-            borderRadius: '6px',
-            margin: '15px 0',
-            fontSize: '14px',
-            color: '#0066cc'
-        },
         messCard: {
             border: '1px solid #e0e0e0',
             borderRadius: '8px',
@@ -172,10 +213,6 @@ const NearbyMesses = () => {
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
             cursor: 'pointer',
             transition: 'all 0.3s'
-        },
-        messCardHover: {
-            boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-            transform: 'translateY(-2px)'
         },
         messHeader: {
             display: 'flex',
@@ -238,8 +275,91 @@ const NearbyMesses = () => {
         });
     };
 
-    // Fetch nearby messes
+    // NEW: Switch between live and custom location modes
+    const switchLocationMode = (mode) => {
+        setLocationMode(mode);
+        if (mode === 'live') {
+            setSearchLocation(null);
+            setShowLocationPopup(false);
+            fetchNearbyMesses(); // Search from user's live location
+        } else {
+            // Set initial custom location to current map center
+            const customLoc = {
+                latitude: viewport.latitude,
+                longitude: viewport.longitude
+            };
+            setSearchLocation(customLoc);
+            setShowLocationPopup(true);
+        }
+    };
+
+    // NEW: Handle map click to place custom pin
+    const onMapClick = (event) => {
+        if (locationMode === 'custom') {
+            const newLocation = {
+                latitude: event.lngLat.lat,
+                longitude: event.lngLat.lng
+            };
+            setSearchLocation(newLocation);
+            setShowLocationPopup(true);
+        }
+    };
+
+    // NEW: Handle custom pin drag
+    const onCustomPinDragEnd = (event) => {
+        const newLocation = {
+            latitude: event.lngLat.lat,
+            longitude: event.lngLat.lng
+        };
+        setSearchLocation(newLocation);
+        setShowLocationPopup(true);
+    };
+
+    // NEW: Search from custom location
+    const searchFromCustomLocation = async () => {
+        if (!searchLocation) return;
+        
+        setLoading(true);
+        setError(null);
+        
+        try {
+            const response = await fetch('https://taste-trove-q3kw.vercel.app/listings/nearby', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    latitude: searchLocation.latitude,
+                    longitude: searchLocation.longitude,
+                    radius: radius,
+                    limit: 20
+                })
+            });
+
+            const data = await response.json();
+
+            if (!data.success) {
+                throw new Error(data.message || 'Failed to fetch nearby messes');
+            }
+
+            setMesses(data.messes);
+            console.log(`Found ${data.count} nearby messes from custom location`);
+
+        } catch (err) {
+            setError(err.message);
+            console.error('Error finding nearby messes:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Enhanced fetch nearby messes (handles both modes)
     const fetchNearbyMesses = async () => {
+        if (locationMode === 'custom' && searchLocation) {
+            await searchFromCustomLocation();
+            return;
+        }
+
         setLoading(true);
         setError(null);
         
@@ -284,13 +404,39 @@ const NearbyMesses = () => {
         }
     };
 
-    // Search with different radius
+    // Search with different radius (enhanced for both modes)
     const searchWithRadius = async (newRadius) => {
         setRadius(newRadius);
-        if (userLocation) {
+        
+        if (locationMode === 'custom' && searchLocation) {
             setLoading(true);
             try {
-                const response = await fetch('https://taste-trove-q3kw.vercel.app/listings/nearby', {
+                const response = await fetch('/listing/nearby', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        latitude: searchLocation.latitude,
+                        longitude: searchLocation.longitude,
+                        radius: newRadius,
+                        limit: 20
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    setMesses(data.messes);
+                }
+            } catch (err) {
+                setError('Failed to search with new radius');
+            } finally {
+                setLoading(false);
+            }
+        } else if (userLocation) {
+            setLoading(true);
+            try {
+                const response = await fetch('/listing/nearby', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -338,6 +484,29 @@ const NearbyMesses = () => {
             <div style={styles.header}>
                 <h2 style={styles.title}>🍽️ Find Messes Near You</h2>
                 
+                {/* NEW: Location Mode Selector */}
+                <div style={styles.locationModeRow}>
+                    <span style={{fontWeight: 'bold', color: '#495057'}}>Search from:</span>
+                    <button 
+                        onClick={() => switchLocationMode('live')}
+                        style={{
+                            ...styles.locationModeBtn,
+                            ...(locationMode === 'live' ? styles.activeModeBtn : {})
+                        }}
+                    >
+                        📍 My Current Location
+                    </button>
+                    <button 
+                        onClick={() => switchLocationMode('custom')}
+                        style={{
+                            ...styles.locationModeBtn,
+                            ...(locationMode === 'custom' ? styles.activeModeBtn : {})
+                        }}
+                    >
+                        📌 Custom Location
+                    </button>
+                </div>
+                
                 <div style={styles.controlsRow}>
                     <button 
                         onClick={fetchNearbyMesses} 
@@ -347,7 +516,7 @@ const NearbyMesses = () => {
                             ...(loading ? {backgroundColor: '#ccc', cursor: 'not-allowed'} : {})
                         }}
                     >
-                        {loading ? '🔄 Searching...' : '📍 Find Nearby Messes'}
+                        {loading ? '🔄 Searching...' : '🔍 Search Messes'}
                     </button>
 
                     <button 
@@ -389,16 +558,25 @@ const NearbyMesses = () => {
                 </div>
             )}
 
-            {/* User Location Display */}
-            {userLocation && !loading && (
+            {/* Location Info Display */}
+            {locationMode === 'live' && userLocation && !loading && (
                 <div style={styles.locationInfo}>
-                    <p>📍 Your location: {userLocation.latitude.toFixed(4)}, {userLocation.longitude.toFixed(4)}</p>
+                    <p>📍 Searching from your location: {userLocation.latitude.toFixed(4)}, {userLocation.longitude.toFixed(4)}</p>
                     <p>🔍 Search radius: {radius/1000} km | Found {messes.length} messes</p>
                 </div>
             )}
 
+            {/* Custom Location Info Display */}
+            {locationMode === 'custom' && searchLocation && !loading && (
+                <div style={styles.customLocationInfo}>
+                    <p>📌 Searching from custom location: {searchLocation.latitude.toFixed(4)}, {searchLocation.longitude.toFixed(4)}</p>
+                    <p>🔍 Search radius: {radius/1000} km | Found {messes.length} messes</p>
+                    <p style={{fontSize: '12px', fontStyle: 'italic'}}>💡 Click on map or drag the yellow pin to change search location</p>
+                </div>
+            )}
+
             {/* Map View */}
-            {showMap && !loading && userLocation && (
+            {showMap && !loading && (
                 <div style={styles.mapContainer}>
                     <ReactMapGL
                         {...viewport}
@@ -406,17 +584,36 @@ const NearbyMesses = () => {
                         mapboxAccessToken={MAPBOX_TOKEN}
                         mapStyle="mapbox://styles/mapbox/streets-v11"
                         ref={mapRef}
+                        onClick={onMapClick}
+                        cursor={locationMode === 'custom' ? 'crosshair' : 'default'}
                     >
-                        {/* User Location Marker */}
-                        <Marker
-                            longitude={userLocation.longitude}
-                            latitude={userLocation.latitude}
-                        >
-                            <div 
-                                style={styles.userMarker}
-                                title="Your location"
-                            />
-                        </Marker>
+                        {/* User Location Marker (Live mode) */}
+                        {locationMode === 'live' && userLocation && (
+                            <Marker
+                                longitude={userLocation.longitude}
+                                latitude={userLocation.latitude}
+                            >
+                                <div 
+                                    style={styles.userMarker}
+                                    title="Your current location"
+                                />
+                            </Marker>
+                        )}
+
+                        {/* Custom Search Location Marker (Custom mode) */}
+                        {locationMode === 'custom' && searchLocation && (
+                            <Marker
+                                longitude={searchLocation.longitude}
+                                latitude={searchLocation.latitude}
+                                draggable={true}
+                                onDragEnd={onCustomPinDragEnd}
+                            >
+                                <div 
+                                    style={styles.searchMarker}
+                                    title="Search location (drag to move)"
+                                />
+                            </Marker>
+                        )}
 
                         {/* Mess Markers */}
                         {messes.map((mess, index) => (
@@ -470,15 +667,42 @@ const NearbyMesses = () => {
                                 </div>
                             </Popup>
                         )}
+
+                        {/* Custom Location Selection Popup */}
+                        {showLocationPopup && locationMode === 'custom' && searchLocation && (
+                            <Popup
+                                longitude={searchLocation.longitude}
+                                latitude={searchLocation.latitude}
+                                onClose={() => setShowLocationPopup(false)}
+                                closeOnClick={false}
+                                anchor="top"
+                            >
+                                <div style={styles.popup}>
+                                    <h4 style={styles.popupTitle}>🔍 Search Location</h4>
+                                    <p style={styles.popupText}>
+                                        📌 Lat: {searchLocation.latitude.toFixed(6)}
+                                    </p>
+                                    <p style={styles.popupText}>
+                                        📌 Lng: {searchLocation.longitude.toFixed(6)}
+                                    </p>
+                                    <button 
+                                        onClick={searchFromCustomLocation}
+                                        style={styles.viewDetailsBtn}
+                                    >
+                                        🔍 Search Here
+                                    </button>
+                                </div>
+                            </Popup>
+                        )}
                     </ReactMapGL>
                 </div>
             )}
 
             {/* List View */}
             {!showMap && !loading && (
-                <div style={styles.listContainer}>
+                <div>
                     {messes.length === 0 ? (
-                        <p style={styles.loading}>No nearby messes found.</p>
+                        <p style={styles.loading}>No nearby messes found. Try increasing the search radius or changing location.</p>
                     ) : (
                         messes.map((mess, index) => (
                             <div 
@@ -511,4 +735,3 @@ const NearbyMesses = () => {
 };
 
 export default NearbyMesses;
-
