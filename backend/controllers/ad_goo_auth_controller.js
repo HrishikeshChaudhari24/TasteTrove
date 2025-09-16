@@ -37,10 +37,10 @@ const redirect = asyncWrapper(async (req, res) => {
         }
         
         res.locals.user = req.user;
-        res.redirect('https://taste-trove-three.vercel.app/');
+        res.redirect('https://tastetrove-26.netlify.app/');
     } else {
         // Handle unauthenticated users properly
-        res.redirect('https://taste-trove-three.vercel.app/login');
+        res.redirect('https://tastetrove-26.netlify.app/login');
     }
     // res.send("hello redirect")
 });
