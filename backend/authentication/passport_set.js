@@ -176,7 +176,7 @@ passport.use('local-user', new LocalStrategy({
 
 // Google User Authentication Strategy (Enhanced Error Handling)
 passport.use('google-user', new GoogleStrategy({
-    callbackURL: 'https://taste-trove-q3kw.vervel.app/auth/google/redirect',
+    callbackURL: 'https://taste-trove-q3kw.vercel.app/auth/google/redirect',
     clientID: process.env.clientID,
     clientSecret: process.env.clientSecret
 }, async (accessToken, refreshToken, profile, done) => {
