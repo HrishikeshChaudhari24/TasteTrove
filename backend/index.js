@@ -54,21 +54,21 @@ app.set("views", path.join(__dirname, "views"));
 //     // allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
 //   })
 // );
-// const corsOptions = {
-//   origin: 'https://tastetrove-26.netlify.app',
-//   methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-//   // allowedHeaders: 'Content-Type, Authorization',
-//   credentials: true,
-//    allowedHeaders: [
-//       "set-cookie",
-//       "Content-Type",
-//       "Access-Control-Allow-Origin",
-//       "Access-Control-Allow-Credentials",
-//     ]
-// };
+const corsOptions = {
+  origin: 'https://tastetrove-26.netlify.app',
+  methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+  // allowedHeaders: 'Content-Type, Authorization',
+  credentials: true,
+   allowedHeaders: [
+      "set-cookie",
+      "Content-Type",
+      "Access-Control-Allow-Origin",
+      "Access-Control-Allow-Credentials",
+    ]
+};
 
 // // Use CORS middleware to handle CORS requests including OPTIONS
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 // app.use(
 //   cors({
 //     origin:
@@ -177,14 +177,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 //http://localhost:3000/Owner/listings/:id
 //http://localhost:3000/Owner/listings/${id}
-res.header(
-    "Access-Control-Allow-Origin",
-    "https://tastetrove-26.netlify.app"
-  );
-  res.header("Access-Control-Allow-Credentials", true);
+// res.header(
+//     "Access-Control-Allow-Origin",
+//     "https://tastetrove-26.netlify.app"
+//   );
+//   res.header("Access-Control-Allow-Credentials", true);
 
-  next();
-});
+//   next();
+// });
 
 app.put('/Owner/listings/:id', async (req, res) => {
   try {
