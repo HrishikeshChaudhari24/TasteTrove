@@ -32,9 +32,9 @@ const login = asyncHandler(async (req, res) => {
         }
         
         res.locals.user = req.user;
-        res.redirect("https://taste-trove-three.vercel.app/");
+        res.redirect("https://tastetrove-26.netlify.app/");
     } else {
-        res.redirect("https://taste-trove-three.vercel.app/login");
+        res.redirect("https://tastetrove-26.netlify.app/login");
     }
 });
 
@@ -86,7 +86,7 @@ const signUp = asyncHandler(async (req, res) => {
         // Don't fail signup if email fails
     }
     
-    res.redirect("https://taste-trove-three.vercel.app/login");
+    res.redirect("https://tastetrove-26.netlify.app/login");
 });
 
 const logout = asyncHandler(async (req, res, next) => {
@@ -96,7 +96,7 @@ const logout = asyncHandler(async (req, res, next) => {
             return next(err); 
         }
         console.log("logging out");
-        res.redirect("https://taste-trove-three.vercel.app/login");
+        res.redirect("https://tastetrove-26.netlify.app/login");
     });
 });
 
