@@ -29,9 +29,9 @@ const login = asyncHandler(async (req, res) => {
         }
         
         res.locals.user = req.user;
-        res.redirect("https://taste-trove-three.vercel.app/");
+        res.redirect("https://tastetrove-26.netlify.app/");
     } else {
-        res.redirect("https://taste-trove-three.vercel.app/login");
+        res.redirect("https://tastetrove-26.netlify.app/login");
     }
 });
 
@@ -91,7 +91,7 @@ const signUp = asyncHandler(async (req, res) => {
     }
     
     console.log("successfully created");
-    res.redirect("https://taste-trove-three.vercel.app/login");
+    res.redirect("https://tastetrove-26.netlify.app/login");
 });
 
 const logout = asyncHandler(async (req, res) => {
@@ -103,7 +103,7 @@ const logout = asyncHandler(async (req, res) => {
             console.error("Logout error:", err);
             return res.status(500).json({ error: "Logout failed" });
         }
-        res.redirect("https://taste-trove-three.vercel.app/login");
+        res.redirect("https://tastetrove-26.netlify.app/login");
     });
 });
 
@@ -218,14 +218,14 @@ const passwordResetRedirect = asyncHandler(async (req, res) => {
     const { token } = req.params;
     
     if (!token) {
-        return res.status(400).redirect('https://taste-trove-three.vercel.app/login');
+        return res.status(400).redirect('https://tastetrove-26.netlify.app/login');
     }
     
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
     const userR = await User.findOne({ passwordResetToken: hashedToken });
     
     if (!userR) {
-        return res.status(400).redirect('https://taste-trove-three.vercel.app/login');
+        return res.status(400).redirect('https://tastetrove-26.netlify.app/login');
     }
     
     // Check if token is expired
@@ -236,7 +236,7 @@ const passwordResetRedirect = asyncHandler(async (req, res) => {
         userR.passwordChangedAt = undefined;
         await userR.save();
         
-        return res.status(400).redirect('https://taste-trove-three.vercel.app/login');
+        return res.status(400).redirect('https://tastetrove-26.netlify.app/login');
     }
     
     res.redirect(`http://localhost:5173/login/resetPassword/${token}`);
