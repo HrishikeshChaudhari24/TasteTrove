@@ -20,7 +20,7 @@ const SignInForm = () => {
     axios.post("https://taste-trove-q3kw.vercel.app/forgotpassword", credentials).then((response) => {
       console.log(response);
       setFlag(true);
-      window.open("https://taste-trove-three.vercel.app/login","_self")
+      window.open("https://tastetrove-26.netlify.app/login","_self")
 
     //   alert('Password has been reset! Please check your inbox');
     }).catch((error)=>{
