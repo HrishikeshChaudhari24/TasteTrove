@@ -411,7 +411,7 @@ const NearbyMesses = () => {
         if (locationMode === 'custom' && searchLocation) {
             setLoading(true);
             try {
-                const response = await fetch('/listing/nearby', {
+                const response = await fetch('https://taste-trove-q3kw.vercel.app/listings/nearby', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -436,7 +436,7 @@ const NearbyMesses = () => {
         } else if (userLocation) {
             setLoading(true);
             try {
-                const response = await fetch('/listing/nearby', {
+                const response = await fetch('https://taste-trove-q3kw.vercel.app/listings/nearby', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
