@@ -13,7 +13,7 @@ const expressSession = require("express-session");
 const Listing = require("./models/listing"); //require model listing
 const Admin = require("./models/admin"); //require model Admin
 const User = require("./models/user"); //require model User
-const allowedOrigins = ['https://taste-trove-three.vercel.app'];
+const allowedOrigins = ['https://tastetrove-26.netlify.app'];
 const axios = require('axios');
 
 
@@ -47,7 +47,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // app.use(
 //   cors({
-//     origin: 'https://taste-trove-three.vercel.app', // Vercel frontend domain
+//     origin: 'https://tastetrove-26.netlify.app', // Vercel frontend domain
 //     methods: "GET,PUT,POST,DELETE,PATCH",
 //     // methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'],
 //     credentials: true, // Allow cookies and sessions to be sent
@@ -55,7 +55,7 @@ app.set("views", path.join(__dirname, "views"));
 //   })
 // );
 // const corsOptions = {
-//   origin: 'https://taste-trove-three.vercel.app',
+//   origin: 'https://tastetrove-26.netlify.app',
 //   methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
 //   // allowedHeaders: 'Content-Type, Authorization',
 //   credentials: true,
@@ -72,7 +72,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(
   cors({
     origin:
-      "https://taste-trove-three.vercel.app",
+      "https://tastetrove-26.netlify.app",
     methods: "GET,PUT,POST,DELETE,PATCH",
     credentials: true,
   })
@@ -179,7 +179,7 @@ app.use(passport.session());
 //http://localhost:3000/Owner/listings/${id}
 res.header(
     "Access-Control-Allow-Origin",
-    "https://taste-trove-three.vercel.app"
+    "https://tastetrove-26.netlify.app"
   );
   res.header("Access-Control-Allow-Credentials", true);
 
