@@ -69,14 +69,14 @@ app.set("views", path.join(__dirname, "views"));
 
 // // Use CORS middleware to handle CORS requests including OPTIONS
 // app.use(cors(corsOptions));
-app.use(
-  cors({
-    origin:
-      "https://tastetrove-26.netlify.app",
-    methods: "GET,PUT,POST,DELETE,PATCH",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin:
+//       "https://tastetrove-26.netlify.app",
+//     methods: "GET,PUT,POST,DELETE,PATCH",
+//     credentials: true,
+//   })
+// );
 // Enable preflight across all routes
 // app.options('*', cors(corsOptions));
 
