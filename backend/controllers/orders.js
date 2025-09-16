@@ -188,7 +188,7 @@ const updateOrder = asyncHandler(async (req, res) => {
 
 const getOrder = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
-        return res.redirect('https://taste-trove-three.vercel.app/login');
+        return res.redirect('https://tastetrove-26.netlify.app/login');
     }
 
     const { userid: userId } = req.params;
