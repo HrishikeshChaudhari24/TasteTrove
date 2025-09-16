@@ -254,7 +254,7 @@ const NearbyMesses = () => {
                 latitude: location.latitude
             }));
 
-            const response = await fetch('https://taste-trove-q3kw.vercel.app/listing/nearby', {
+            const response = await fetch('https://taste-trove-q3kw.vercel.app/listings/nearby', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
