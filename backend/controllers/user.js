@@ -39,60 +39,142 @@ const signUpform = (req, res) => {
     res.render("users/signUp.ejs");
 };
 
+// const signUp = asyncHandler(async (req, res) => {
+//     const { name, email, Contact, password, Cpassword } = req.body;
+    
+//     // Input validation
+//     if (!name || !email || !password || !Cpassword) {
+//         return res.status(400).send("All fields are required");
+//     }
+    
+//     // Check if user already exists
+//     const existingUser = await User.findOne({ email }).lean();
+//     if (existingUser) {
+//         return res.status(400).send("User already exists");
+//     }
+    
+//     // Validate email
+//     const { valid, reason, validators } = await isEmailValid(email);
+//     if (!valid) {
+//         console.log("fake hai re tu!!");
+//         return res.status(400).send({
+//             message: "Please provide a valid email address.",
+//             reason: validators[reason].reason
+//         });
+//     }
+    
+//     // Password confirmation check
+//     if (Cpassword !== password) {
+//         return res.status(400).send("Passwords don't match");
+//     }
+    
+//     // Create user data
+//     const userData = {
+//         name,
+//         email,
+//         Contact,
+//         password: hashSync(password, 10)
+//     };
+    
+//     const newUser = await User.create(userData);
+    
+//     // Send welcome email (non-blocking)
+//     try {
+//         await sendMail({
+//             email: newUser.email,
+//             subject: 'Success',
+//             text: `Welcome to Taste Trove! 🎉 Thank you for joining our vibrant community of food enthusiasts. Get ready to discover exciting flavors, connect with fellow foodies, and embark on delicious culinary adventures. Happy exploring!`
+//         });
+//     } catch (emailError) {
+//         console.log("Welcome email sending failed:", emailError);
+//         // Don't fail signup if email fails
+//     }
+    
+//     console.log("successfully created");
+//     res.redirect("https://tastetrove-26.netlify.app/login");
+// });
+
 const signUp = asyncHandler(async (req, res) => {
     const { name, email, Contact, password, Cpassword } = req.body;
     
-    // Input validation
+    // Input validation (fast)
     if (!name || !email || !password || !Cpassword) {
-        return res.status(400).send("All fields are required");
-    }
-    
-    // Check if user already exists
-    const existingUser = await User.findOne({ email }).lean();
-    if (existingUser) {
-        return res.status(400).send("User already exists");
-    }
-    
-    // Validate email
-    const { valid, reason, validators } = await isEmailValid(email);
-    if (!valid) {
-        console.log("fake hai re tu!!");
-        return res.status(400).send({
-            message: "Please provide a valid email address.",
-            reason: validators[reason].reason
+        return res.status(400).json({ 
+            success: false,
+            message: "All fields are required" 
         });
     }
     
-    // Password confirmation check
+    // Password confirmation check (fast)
     if (Cpassword !== password) {
-        return res.status(400).send("Passwords don't match");
-    }
-    
-    // Create user data
-    const userData = {
-        name,
-        email,
-        Contact,
-        password: hashSync(password, 10)
-    };
-    
-    const newUser = await User.create(userData);
-    
-    // Send welcome email (non-blocking)
-    try {
-        await sendMail({
-            email: newUser.email,
-            subject: 'Success',
-            text: `Welcome to Taste Trove! 🎉 Thank you for joining our vibrant community of food enthusiasts. Get ready to discover exciting flavors, connect with fellow foodies, and embark on delicious culinary adventures. Happy exploring!`
+        return res.status(400).json({ 
+            success: false,
+            message: "Passwords don't match" 
         });
-    } catch (emailError) {
-        console.log("Welcome email sending failed:", emailError);
-        // Don't fail signup if email fails
     }
     
-    console.log("successfully created");
-    res.redirect("https://tastetrove-26.netlify.app/login");
+    // Basic email format validation (fast - no external API)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ 
+            success: false,
+            message: "Invalid email format" 
+        });
+    }
+    
+    try {
+        // Check if user exists (optimized with lean)
+        const existingUser = await User.findOne({ email }).lean();
+        if (existingUser) {
+            return res.status(400).json({ 
+                success: false,
+                message: "User already exists" 
+            });
+        }
+        
+        // Create user data with hashed password
+        const userData = {
+            name,
+            email,
+            Contact,
+            password: hashSync(password, 10) // Keep this but optimize other parts
+        };
+        
+        // Create user
+        const newUser = await User.create(userData);
+        
+        // Send welcome email asynchronously (non-blocking)
+        setImmediate(async () => {
+            try {
+                await sendMail({
+                    email: newUser.email,
+                    subject: 'Welcome to Taste Trove',
+                    text: `Welcome to Taste Trove! 🎉 Thank you for joining our vibrant community of food enthusiasts.`
+                });
+                console.log("Welcome email sent to:", newUser.email);
+            } catch (emailError) {
+                console.log("Welcome email failed:", emailError);
+            }
+        });
+        
+        console.log("User created successfully:", newUser.email);
+        
+        // Return success immediately (don't wait for email)
+        return res.status(201).json({
+            success: true,
+            message: "Account created successfully! Please login.",
+            redirect: "https://tastetrove-26.netlify.app/login"
+        });
+        
+    } catch (error) {
+        console.error("Signup error:", error);
+        return res.status(500).json({ 
+            success: false,
+            message: "Account creation failed. Please try again." 
+        });
+    }
 });
+
 
 const logout = asyncHandler(async (req, res) => {
     console.log("logging out");
