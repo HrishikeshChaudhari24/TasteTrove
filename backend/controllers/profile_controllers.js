@@ -7,7 +7,7 @@ const getprofile=asyncWrapper( async (req, res) => {
     if(id){
         if(user){
 
-            res.render("users/profile.ejs", { user });
+            res.json(user);
         }else{
             res.redirect("/register");    
         }
