@@ -80,7 +80,7 @@ app.use(cors(corsOptions));
 // Enable preflight across all routes
 app.options('*', cors(corsOptions));
 
-app.options('*', cors());
+
 // for parsing data using res and request
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
