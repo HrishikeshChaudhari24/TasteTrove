@@ -11,6 +11,8 @@ import { formatCurrency } from '../../utils/helpers';
 import { useDispatch } from 'react-redux';
 // import { fetchAddress } from '../user/userSlice';
 import axios from 'axios';
+import OrderSummary from './OrderSummary';
+import './CreateOrd.css';
 
 
 // https://uibakery.io/regex-library/phone-number
@@ -69,52 +71,58 @@ function CreateOrd() {
   if (!cart.length) return <EmptyCart />;
 
   return (
-    <div className="px-4 py-6">
+    <div className="checkout-page px-4 py-6">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Lets go!</h2>
 
-      {/* <Form method="POST" action="/order/new"> */}
-      {/* <Form method='post'  > */}
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label className="sm:basis-40">First Name</label>
-          <input
-            className="input w-full"
-            type="text"
-            name="customer"
-            defaultValue={userdata[0].name}
-            required
-          />
+      <div className="checkout-layout">
+        {/* Order Form */}
+        <div className="checkout-form-section">
+          {/* <Form method="POST" action="/order/new"> */}
+          {/* <Form method='post'  > */}
+            <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+              <label className="sm:basis-40">First Name</label>
+              <input
+                className="input w-full"
+                type="text"
+                name="customer"
+                defaultValue={userdata[0].name}
+                required
+              />
+            </div>
+
+            <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+              <label className="sm:basis-40">Phone number</label>
+              <div className="grow">
+                <input className="input w-full" type="tel" name="phone" onChange={handlePhoneChange} required />
+                {formErrors?.phone && (
+                  <p className="mt-2 rounded-md bg-red-100 p-2 text-xs text-red-700">
+                    {formErrors.phone}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+              <input
+                type="hidden"
+                name="position"
+                value={
+                  position.longitude && position.latitude
+                    ? `${position.latitude},${position.longitude}`
+                    : ''
+                }
+              />
+              <Button onClick={submitOrder} type="primary">
+                {formatCurrency(cart[0].totalAmount)}
+              </Button>
+            </div>
+          {/* </Form> */}
         </div>
 
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label className="sm:basis-40">Phone number</label>
-          <div className="grow">
-            <input className="input w-full" type="tel" name="phone" onChange={handlePhoneChange} required />
-            {formErrors?.phone && (
-              <p className="mt-2 rounded-md bg-red-100 p-2 text-xs text-red-700">
-                {formErrors.phone}
-              </p>
-            )}
-          </div>
-        </div>
-
-       
-
-        <div>
-          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <input
-            type="hidden"
-            name="position"
-            value={
-              position.longitude && position.latitude
-                ? `${position.latitude},${position.longitude}`
-                : ''
-            }
-          />
-          <Button onClick={submitOrder}  type="primary">
-            {formatCurrency(cart[0].totalAmount)}
-          </Button>
-        </div>
-      {/* </Form> */}
+        {/* Order Summary Sidebar */}
+        <OrderSummary cart={cart} />
+      </div>
     </div>
   );
 }
