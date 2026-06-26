@@ -354,11 +354,11 @@ const handleFormSubmit = async (e) => {
             <form onSubmit={handleFormSubmit} className="edit-form">
               <div className="edit-input">
                 <label htmlFor="name">User Name:</label>
-                <input type="text" name="name" value={profile.name} />
+                <input type="text" name="name" value={profile.name} onChange={handleInputChange} />
               </div>
               <div className="edit-input">
                 <label htmlFor="email">Email:</label>
-                <input type="email" name="email" value={profile.email} />
+                <input type="email" name="email" value={profile.email} onChange={handleInputChange} />
               </div>
               <div className="edit-input">
                 <label htmlFor="state">state:</label>
