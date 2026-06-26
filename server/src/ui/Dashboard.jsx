@@ -33,6 +33,8 @@ function AdminHub() {
   // const [profile, setProfile] = useState({});
   const navigate = useNavigate();
   const userdata = useSelector((state) => state.userdata);
+  const { id } = useParams();
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -172,7 +174,6 @@ function AdminHub() {
   const handleClick = () => {
     // Disable the button
   };
-  const { id } = useParams();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
