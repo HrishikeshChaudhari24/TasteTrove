@@ -40,7 +40,7 @@ const Profile = () => {
             const response = await axios.get(`https://taste-trove-q3kw.vercel.app/order/admin/${id}`, { withCredentials: true });
             console.log(response.data)
             const filteredOrders = response.data.filter(orderEntry => {
-                const orderTime = new Date(orderEntry.order.time);
+                const orderTime = new Date(orderEntry.order.time).getTime();
                 console.log(orderTime)
                 return orderTime > Date.now();
             });

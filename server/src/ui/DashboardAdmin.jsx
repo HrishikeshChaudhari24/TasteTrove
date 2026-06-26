@@ -213,22 +213,22 @@ function DashboardAdmin() {
       var countValue = 0;
       var amountValue = 0;
       const filteredOrders = response.data.filter((orderEntry) => {
-        const orderTime = new Date(orderEntry.order.time);
+        const orderTime = new Date(orderEntry.order.time).getTime();
         console.log(orderTime);
         console.log(Date.now())
         const timestamp = Date.now(); // Your timestamp here
         const date = new Date(timestamp);
         console.log(date);
         amountValue = amountValue + orderEntry.order.amount;
-        if (orderTime < Date.now()) {
-          var obj = { status: "Expired" };
-          // orderEntry.order.time=orderTime;
-          return Object.assign(orderEntry, obj);
-        } else {
+        if (orderTime > Date.now()) {
           countValue++;
           // orderEntry.order.time=orderTime;
           var obj = { status: "Live" };
           // Object.assign(orderEntry, obj);
+          return Object.assign(orderEntry, obj);
+        } else {
+          var obj = { status: "Expired" };
+          // orderEntry.order.time=orderTime;
           return Object.assign(orderEntry, obj);
         }
       });
