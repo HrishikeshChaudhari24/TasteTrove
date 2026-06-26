@@ -84,15 +84,15 @@ function AdminHub() {
       var countValue = 0;
       var amountValue = 0;
       const filteredOrders = response.data.filter((orderEntry) => {
-        const orderTime = new Date(orderEntry.order.time);
+        const orderTime = new Date(orderEntry.order.time).getTime();
         console.log(orderTime);
         amountValue = amountValue + orderEntry.order.amount;
-        if (orderTime < Date.now()) {
-          var obj = { status: "Expired" };
-          return Object.assign(orderEntry, obj);
-        } else {
+        if (orderTime > Date.now()) {
           countValue++;
           var obj = { status: "Live" };
+          return Object.assign(orderEntry, obj);
+        } else {
+          var obj = { status: "Expired" };
           return Object.assign(orderEntry, obj);
         }
       });

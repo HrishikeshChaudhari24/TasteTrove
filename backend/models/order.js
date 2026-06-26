@@ -11,7 +11,7 @@ const orderSchema = new Schema({
     },
     time:{
         type: Date,
-        default: Date.now() + 3 * 60 * 60 * 1000
+        default: () => new Date(Date.now() + 3 * 60 * 60 * 1000)
         // required:true
     },
     listings: [
@@ -38,4 +38,3 @@ const orderSchema = new Schema({
 
 
 module.exports = mongoose.model("Order", orderSchema);
-
